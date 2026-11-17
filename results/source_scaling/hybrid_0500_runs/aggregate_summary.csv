@@ -1,0 +1,3 @@
+protocol,trials,grokked,mean_grok_step,std_grok_step,mean_final_val_acc,mean_wall_seconds,mean_flow_inference_seconds,mean_interventions,mean_optimizer_flow_cosine,mean_raw_flow_to_optimizer_norm_ratio
+raw_equal_fixed_9000,20,20,3995.0,1593.8946012832844,0.9997203320264816,10.31457794503076,0.10404214026639239,45.95,-0.821746106576364,517.3453834827629
+raw_optimizer10_flow90_fixed_9000,20,20,3690.0,1470.7320053561584,0.9989596366882324,9.553904750023502,0.09467485507484526,42.9,-0.7830945896367292,313.2769700970703

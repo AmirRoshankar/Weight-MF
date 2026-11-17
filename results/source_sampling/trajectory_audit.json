@@ -1,0 +1,15 @@
+{
+  "state": "passed",
+  "count": 602,
+  "errors": [],
+  "overlap_checkpoints": 755,
+  "exact_matches": 755,
+  "start_min": 0,
+  "start_max": 18550,
+  "phases": {
+    "before": 4063,
+    "crossing": 896,
+    "after": 1061
+  },
+  "split_sha256": "7ee18faa1eeb8fa037f93c1b5702422afbef11b97ace8f5875a2d0e7c3a3d3db"
+}

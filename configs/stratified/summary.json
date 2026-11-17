@@ -1,0 +1,48 @@
+{
+  "method": "improved_meanflow",
+  "scope": "transformer_block_weights",
+  "config": {
+    "train_runs": 500,
+    "validation_runs": 51,
+    "test_runs": 51,
+    "train_steps": 10000,
+    "batch_size": 4,
+    "runs_per_batch": 4,
+    "learning_rate": 0.0001,
+    "adam_beta2": 0.95,
+    "gradient_clip": 1.0,
+    "log_every": 100,
+    "endpoint_eval_every": 500,
+    "endpoint_eval_pairs": 24,
+    "seed": 20261108,
+    "max_checkpoint_step": 30000.0,
+    "ema_decay": 0.9999,
+    "metric_prompt": "training_loss",
+    "width": 240,
+    "latent_tokens": 64,
+    "latent_depth": 4,
+    "heads": 8
+  },
+  "model_config": {
+    "row_width": 128,
+    "row_count": 1536,
+    "attention_heads": 4,
+    "head_width": 32,
+    "width": 240,
+    "latent_tokens": 64,
+    "latent_depth": 4,
+    "heads": 8,
+    "condition_frequencies": 16
+  },
+  "parameter_count": 15337200,
+  "run_counts": {
+    "train": 500,
+    "validation": 51,
+    "test": 51
+  },
+  "strict_training_pairs": 5000,
+  "best_validation_endpoint_mse": 1.9440373844570584,
+  "test_endpoint_mse": 1.9552758746676975,
+  "test_delta_cosine": 0.21478353200078595,
+  "training_seconds": 694.9776522999746
+}

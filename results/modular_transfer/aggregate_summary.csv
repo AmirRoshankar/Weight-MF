@@ -1,0 +1,17 @@
+modulus,task,protocol,trials,grokked,restricted_mean_grok_step,std_censored_grok_step,median_censored_grok_step,mean_final_val_acc
+97,addition,addition_transformer_imf_full_reset,20,20,2415.0,774.1038961956356,2300.0,0.9995901018381119
+97,addition,optimizer_only,20,20,7045.0,3081.092594997328,6300.0,0.9992257505655289
+97,bitwise_xor,addition_transformer_imf_full_reset,20,20,2850.0,1107.6290467765632,2500.0,0.9932973980903625
+97,bitwise_xor,optimizer_only,20,20,6385.0,1691.2390350521746,5750.0,0.9906406581401825
+97,division,addition_transformer_imf_full_reset,20,18,8770.0,4691.324580093502,7100.0,0.9514649592339992
+97,division,optimizer_only,20,10,17720.0,2805.9335626302227,18950.0,0.6145957994274795
+97,multiplication,addition_transformer_imf_full_reset,20,20,2590.0,1164.3385291771099,2300.0,0.9999392747879028
+97,multiplication,optimizer_only,20,19,8035.0,4245.031151085255,6350.0,0.9586230486631393
+97,quadratic_symmetric,addition_transformer_imf_full_reset,20,0,20000.0,0.0,20000.0,0.27177015170454977
+97,quadratic_symmetric,optimizer_only,20,0,20000.0,0.0,20000.0,0.14968878105282785
+97,subtraction,addition_transformer_imf_full_reset,20,18,7795.0,4857.601205706806,6050.0,0.9875208795070648
+97,subtraction,optimizer_only,20,10,16335.0,4515.619092602218,18800.0,0.5980112353106961
+113,multiplication,addition_transformer_imf_full_reset,20,20,2020.0,638.7487769068525,1900.0,0.9999384790658951
+113,multiplication,optimizer_only,20,20,6740.0,2774.3941965580043,6000.0,0.999675589799881
+113,subtraction,addition_transformer_imf_full_reset,20,18,7220.0,4849.264729941296,6000.0,0.9869560569524765
+113,subtraction,optimizer_only,20,10,16415.0,4887.60785316455,18900.0,0.7612372883362696

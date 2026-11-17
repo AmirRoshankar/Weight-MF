@@ -1,0 +1,1086 @@
+[
+  {
+    "file": "results/modular_transfer/aggregate_summary.csv",
+    "sha256": "7a0752dfdf56224dd579b50944e1e63079891f830ebf543f2fd22e25fd744dbd"
+  },
+  {
+    "file": "results/modular_transfer/training_metrics.csv",
+    "sha256": "3ad93a117c2cb59599a5d7433f1dc72e523388d0e33d8dcd0a206f18532de99b"
+  },
+  {
+    "file": "results/modular_transfer/trial_summary.csv",
+    "sha256": "15fca9331cf9cd5763c374944a7ad94c41a0d91f26c6199f63ee4957a5a1bd9f"
+  },
+  {
+    "file": "results/source_sampling/trajectory_audit.json",
+    "sha256": "c7f29464d3183caea648c8ad76b3c989cfbb70396188573230db936b6a3ae74b"
+  },
+  {
+    "file": "results/source_scaling/censor_aware_summary.csv",
+    "sha256": "44bccbb4c961a041a3ac53f1d61378e41eec0e601ab901b28f08abe441baea16"
+  },
+  {
+    "file": "results/source_scaling/scaling_statistics.csv",
+    "sha256": "a90af89ea05bd6f56a8d81e9add994a4728239dc852c13e46a2de13f37f186bb"
+  },
+  {
+    "file": "results/source_scaling/scaling_summary.csv",
+    "sha256": "9f2bd9cc945ba77dabb491fba29e4b0f37e72883345247320ec9a460f9991596"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/aggregate_summary.csv",
+    "sha256": "b5410e90545ed47b0e8e869990b0b97aa4b545cb7696488246afda3ca81139c2"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7000.csv",
+    "sha256": "989426a6a9fff8e045e027cd22dd198d7b0b74cdcdd4bd77329f85e133e60d8c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7001.csv",
+    "sha256": "dec7bdbb8c0cffee8390ac6a1e6dcfde8e3442581778d4b215049f907045cf8e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7002.csv",
+    "sha256": "32623a1b5b56f15040e461ddb5157f10042be6470d333f11179246932941e135"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7003.csv",
+    "sha256": "10d6d749be8031397c5fed85b5fc551a57950c395d0c04137455ebadaecf464d"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7004.csv",
+    "sha256": "2085e14f94f5bde5da3530f2f975ecc5547f20c89542d367d2108686e7cfcc5b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7005.csv",
+    "sha256": "9a405bd82b8303e4428d80313575a24efcae465fce4f5e87110c70fd53d6f5e9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7006.csv",
+    "sha256": "0b28b2ebef7dffcc48be0bdc062637aaa1df70cd91b42b6bab923958ad015519"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7007.csv",
+    "sha256": "e781ef6d5e4405f4b533cfd6a79003fae99603a6781dd46f7765f90fde52541d"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7008.csv",
+    "sha256": "5754e9e947bc89b35e89232538f34f137d8fa02ca7ec4efaa5b605013c86588e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7009.csv",
+    "sha256": "681cb0eb636a2dda6623fd020c73bc0c4e3f7be3295ca5ee7065d9acb8262e65"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7010.csv",
+    "sha256": "dd7e5aff28a881e22f44c35e05e4595fb594f3478ad70d59b9a1b94a9980b23b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7011.csv",
+    "sha256": "de66c3b31111a0dd0140ac80d890557cc9473fa07d52aca949c853cdb772982a"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7012.csv",
+    "sha256": "763362085c5adeb671480b57630d0a5d232d9c561d0afbe2ab597f872025a202"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7013.csv",
+    "sha256": "27caf3b1e64f6fbbee7bd8c52756603e143cbbfdd5842fd452c32f405d30a9ee"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7014.csv",
+    "sha256": "4ad2887f4ac28a6e491430a0b34cf1e849a258fcbb3a2066dc9e4c75649bd3f5"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7015.csv",
+    "sha256": "5c3d5dc0001b1caa72bea7f31b52fbe37de17afa7d43d14b6c45f14dc2658645"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7016.csv",
+    "sha256": "6bfc088023545328cd62e65329544d5bf710f4d33cda34be1134cff0d0a26ba5"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7017.csv",
+    "sha256": "207846519f8205855987209ad1b013dfe57c2214e6fa374c819c413daa766d14"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7018.csv",
+    "sha256": "acf43b5e6715f31589359849393981ef6e4d1bbc0beb52bbb06418ef9c8ee00f"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_equal_fixed_9000_seed_7019.csv",
+    "sha256": "fc0d6fb242426002bba952fe13712ac5c39f2180fc97677549d04ca1aa00086c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7000.csv",
+    "sha256": "08ae6f562a38eb8f97d2b7bea5c220a62b98c682c1a199b0caf4686b5bc6bc2c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7001.csv",
+    "sha256": "5a39f43c243bfcb48b12db3367a766cddeae89f21ad3c26d5a7505ddd233a7e2"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7002.csv",
+    "sha256": "529d407826b8ae51620d3696f0fa5cfb45272ee30dc70ccaa5154154756c5422"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7003.csv",
+    "sha256": "96b102f90cee5310bb4d3048600c45db2466e7af575d6a109945efd449488ba9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7004.csv",
+    "sha256": "189c7a564b8e3a3b700b3b801df3d83211d91b99f77ef826d7297b216c9f5f2e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7005.csv",
+    "sha256": "9d0634acb7c5fe2dd471c385aac708eb55057ece37dc38ac920b561b1362c8d9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7006.csv",
+    "sha256": "dceb404596ce81f56642f116c8208d4ec246f618d505e509730c9f610bd73827"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7007.csv",
+    "sha256": "f900ac7ef975cc6aaca7e8da6293295715e4588b3a505e67be8285dc95bba9c9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7008.csv",
+    "sha256": "ebf7b3ae7954b9a76bcd545d670cfeb8037ecb1eca7351c3454c6ab9519f386b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7009.csv",
+    "sha256": "2fa616dba35e37ff988ff9991e49298640a2eb85a6623bfd994d6a697723a576"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7010.csv",
+    "sha256": "3e5d58170033de81680a4974634054c11ff79c0faf3940b1a6acc2dfe233708e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7011.csv",
+    "sha256": "47a0d03e98463d62f72525ceff83474b77d738f01c78cff7765f218c84ae4859"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7012.csv",
+    "sha256": "fc94e009ce5b4a402c1d2aebd283c39b9a89c2582df54b26680a383b8fc7c2ee"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7013.csv",
+    "sha256": "2b40d26d0f3b50b0035849f83b61808369627044e2ee8a821be432093f3c250b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7014.csv",
+    "sha256": "59565b134288ffb6f04619feb17977fabd06ebe38c9f21638e7e49320f7f0a84"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7015.csv",
+    "sha256": "5cddd7afb999a9108835cfbd248816ccd42d43d0c8595dae6356d50e590014a3"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7016.csv",
+    "sha256": "6c937a3e90a0186e258c515d9a3a171a0d77a5552ce74d1dbd0867b4ca5187c5"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7017.csv",
+    "sha256": "32ae292c30e27f2dc50ed349a3f7b0e1e12f061563b7cbeeae23a8122dcd6a2d"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7018.csv",
+    "sha256": "543ce4dac803f4a2efb6aea8ed4544e4730765514c832e432f9c97170251aed8"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7019.csv",
+    "sha256": "df735935ad0947c61b9c8e02ca2c6002cd37f0ee5456cbd13da6020452bcc935"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/training_metrics.csv",
+    "sha256": "9b92276becfa3d4be63b4235c43f1838e619a536242172eed4f69514b9811be9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0050_runs/trial_summary.csv",
+    "sha256": "e531c78101f6739dc0b13bb7b2361af3c2f68b0c05e677908a002ba03503c513"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/aggregate_summary.csv",
+    "sha256": "47f0b91b0a0e92e08243e225fe01a500aaa3e6fbab4094763159201654af3bb3"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7000.csv",
+    "sha256": "687862f826f35d6e657c7da53a25b6a384e500de0b57fb2e344ae99c67ad005f"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7001.csv",
+    "sha256": "2e084d0a0c12492bd29174e1547e67a53dc2a6899599104e4a16f1ec76ad0db4"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7002.csv",
+    "sha256": "db13119f40153aee394b08dcad3c0d9b7d83beba463ff7ae097a84e42585ad48"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7003.csv",
+    "sha256": "49bdadeb4ba6935a55c54009c9de9ce9bdd796192a83a45cdc10acb914a50f57"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7004.csv",
+    "sha256": "ac4c28e433eda3745da91db06f2b32b722a61e4ce4213898630d5081d6aa63be"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7005.csv",
+    "sha256": "2b5f3e6d4d3cd698cf1ee1f11c74e17c2af3cd8cddf6943c990f513890a2da8d"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7006.csv",
+    "sha256": "6601c2e8d4e8918d92b40a9bf2db1da0381d6cf9097675e65651ec9797a3e8f8"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7007.csv",
+    "sha256": "4a0f04b78f0e791850e7cc5f4bd465907099e6ce7b49f5f86382c096a96b036c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7008.csv",
+    "sha256": "d0ad792e4d46e35224badb84ebe15fb63d41857f07985ca7c5a88fe13b4a1e50"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7009.csv",
+    "sha256": "ad7e12080c325fcc3a7166a3f7a2914ea911d28121c45c788fae8fd93c11c992"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7010.csv",
+    "sha256": "67705b41810eb7ea252dd620ed95d731e51a92c99245a7ab1bbd328b44116d1b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7011.csv",
+    "sha256": "17f2b19a6cbd49bfd3857ea3048a2ec29a4a1b85f7072d8050f5ba928f8ed119"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7012.csv",
+    "sha256": "8761cdc011c2a1b39546360b8baaf68544a762d7ae9e11fa0db240a47966af29"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7013.csv",
+    "sha256": "a8c9a6e062533e815831a89c5d9a5904c6a76b8e7653aed6bd81954e2fe2b1a6"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7014.csv",
+    "sha256": "0c04ef84b67f927a77b98be2bd6fb4ba8142707babd14a31c54b8073ab005aeb"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7015.csv",
+    "sha256": "59f33903e3318c7057f5e0daf465f6640de6bc84a38faaa65e6a001998d1ad45"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7016.csv",
+    "sha256": "cd7f7d6d05a94c206ea96937c1a95bad29b21d6e9840306d86b519fe50d4b584"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7017.csv",
+    "sha256": "df102b08a98dc7b964deb9096b121a383b7291a6d7b902bec4c7086d2ec2ecf2"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7018.csv",
+    "sha256": "ab6a043a633af47f488947bea571030922417d7b177b34a997ec4cf947dd2bc3"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_equal_fixed_9000_seed_7019.csv",
+    "sha256": "5d999b1a8916499912c9ef67e638e3fde6cbd3d8c20ed4c9b12a2d317aaecca2"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7000.csv",
+    "sha256": "64b50fe646a759ed881fe675d19033b504f5cb6f85e2d8df5533287b378ec176"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7001.csv",
+    "sha256": "7bcadd4240eb5aa9fd90ad73001eb05bca8e57b0bd84f5f82607e36b58058e45"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7002.csv",
+    "sha256": "eeb7f540de30de22568b977b56a7a5f21750e717c78636862a4beee1f5489fcb"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7003.csv",
+    "sha256": "9e4d4e0383c70b3a1fe468986c1c1391bea50cb4ebfdb55c8fa8f1a4cb312de1"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7004.csv",
+    "sha256": "0c46b56a0c5bb21ee30801d6d6124a59db3e4f96a16d6b5ae518334b587e051c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7005.csv",
+    "sha256": "0f3282cba41ff32e063b95bb2217914e890bd0a6698f293c0e2629e3ed75c908"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7006.csv",
+    "sha256": "4199377c2576b275a7f5466468460f31b091212829d740fda75b5610257f8ade"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7007.csv",
+    "sha256": "2dfa7794d0671c0719771d3ebd5fa31283d6e1153ad5de0c123d1ef7d5bb1afe"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7008.csv",
+    "sha256": "4c7c86bd1011508e8ff86c0c35fed9b08e11cafc3fe8d76c44e0e95beaf99f9b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7009.csv",
+    "sha256": "cf3e413d525504b7cb1b0b47808904cf3b13ea0c015f94e258e35f56c7f4e3a9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7010.csv",
+    "sha256": "f7237eb07e50fc3a74d46c058570969faa223f130cfb5df292747e5a36596639"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7011.csv",
+    "sha256": "23f6c658c1eef65ad7346248739b018409184ebd589d3b4c999995431aafdb4e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7012.csv",
+    "sha256": "1614bf32f9af7170b8e947e74ad6ad7045b8963f1e9b02a1d62437771ed8ba76"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7013.csv",
+    "sha256": "a3310bac5110dd8c570070f421fe6fa2ce7e39a8f8fda30df9c7cc40011a6b7c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7014.csv",
+    "sha256": "e3e34cdd06bc5d6c09cdccc1af65941138aafbcd8d45a45a86f712574b1fa64a"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7015.csv",
+    "sha256": "6aa78f27eb5a65d46343a859d5bb89b7f9f3ad0b6153b17b7f022c5ff6c1d86f"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7016.csv",
+    "sha256": "ee5afb56683b910c3e50ab8fe55d26dc0a894bbd2df71666142a96b990d549a0"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7017.csv",
+    "sha256": "4daff8fbcebe5a4d37a7b848b1a85bb1d22ebe311805162797f35fdd54172e61"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7018.csv",
+    "sha256": "32553b4cf20be1d2d3ae469c18ddbba1f5b23d52609b71c9dcebc98a31a94c25"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7019.csv",
+    "sha256": "d5d1780600e0e637b5fe747a19a7aac0ad5909cde852a04790e98787f0b5ec7e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/training_metrics.csv",
+    "sha256": "308db7c39d268386fb9d3d270d4471f9b55d40283eab99590048bdc251019f4c"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0150_runs/trial_summary.csv",
+    "sha256": "0be3520763cd7cf6239a266fd77faa785157048132c74096f977d019d2aae6d4"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/aggregate_summary.csv",
+    "sha256": "a94d4e55461855236f5c4f1c3dbfa0edd5f61f083be8c9def0e4a2abd1ee7df0"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7000.csv",
+    "sha256": "20793b144ca814a57759f1f1decc432c0872e923c22e5f32ddf13b40394ea569"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7001.csv",
+    "sha256": "b8acd0efc3cf62a33a58cdce3d4ba22eaa8c194281c1e8996c1c32a4abb1cfcf"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7002.csv",
+    "sha256": "b9613e2e136ca8ea309efd5643d7a7bdabcaae9439b8c994d5e87b46a532c06d"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7003.csv",
+    "sha256": "ab68cca060c46b68e30fadca2b8bffe40257cb3a2b05b34d52d1ffc8c5901e31"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7004.csv",
+    "sha256": "336d2b4ffc63b08d89d9404b8ed24e29db64c374b14581ea94779e88e1279983"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7005.csv",
+    "sha256": "eb03973edfee806bc9bc948766e3162959e532690b0f9ece1f28d2fa95e6a9ce"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7006.csv",
+    "sha256": "ceaaeeae455151eaaf1bdf48c872439c5352a010f6e1ce981ddbc46931bdefc9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7007.csv",
+    "sha256": "2d45c11e59e297223dcffeb424beff76e5c4f23892842cdc8271798d8f1a4460"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7008.csv",
+    "sha256": "ec449afdc96c5f55aae9a492661ec0bdc2111918b5a54208d3fbfbaf5df59bf4"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7009.csv",
+    "sha256": "e15e6ae498e4821f3e1227709ffa14d1f3f5c5ed342e4e4d8623f4f9da431fe5"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7010.csv",
+    "sha256": "2f69e11a1a09b9238a5d8fd6280c5cbac3fa50d9a9dfd2af4d1fe1b5296de929"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7011.csv",
+    "sha256": "233bcbc61aa070249103880b0db82531e8db02fd116a5d60a628eb5e2b7787ed"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7012.csv",
+    "sha256": "f75397cdb2c6574519d7aa927996106d4cd96738e3c0ac5dc057fc2133fe5a52"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7013.csv",
+    "sha256": "13f9e299502cc2a37d51a0fd22ac89840ef6b39fb9e090765f28a002ca9f34ff"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7014.csv",
+    "sha256": "14e3ca21ca42a1155cbe891655944734c51a202907e84e30a53769cedebad99e"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7015.csv",
+    "sha256": "698bfa8fc314fd06e393b494a6f0221b675462a7d71020f3e6bce65f12099e67"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7016.csv",
+    "sha256": "27d0773fbf61aa7abf5a6b936df51b2947bfbf995d5054e3bec9ae923b1141bb"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7017.csv",
+    "sha256": "18b6e2e7a9fd5a7b24504ba03db7d8dafdfea350c99568b8d3249a3796e85272"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7018.csv",
+    "sha256": "f6fcafbc2885661eae3e550ca59bc11d2a51340161ad0b26479d67c5ce6628db"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_equal_fixed_9000_seed_7019.csv",
+    "sha256": "b8c76a36447e5d1673690baaac16016e4ea24e6983b8eff678293369ac27ea2f"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7000.csv",
+    "sha256": "a0160f3beaa8f6a93604519886bb4da4450fa1d65eaa8ffbf15eac89fdd94616"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7001.csv",
+    "sha256": "b16b5f9e35c300bbf191e2394e131cedd421965286d189f4ab8a8342bd673f2f"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7002.csv",
+    "sha256": "abd491fcc16b534c121704c3801e554128d99de48f2f690c259ba2d6f2c9b324"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7003.csv",
+    "sha256": "2f5c065510ffd0329fc7651b119348687d2ab294db8cfb5106361f35e62fc5ec"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7004.csv",
+    "sha256": "c50673c37814e444904f5f018bb96ba031b4a6bec74135583561af77951fbe5b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7005.csv",
+    "sha256": "200d532310bb0e88eda9f71f6b294ea983481c67e530bdeebe7db397a6d045bc"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7006.csv",
+    "sha256": "5e20550bd64accb08b5895a819d1453401d348db0eb10a6955be9e4b294b3eb5"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7007.csv",
+    "sha256": "528df83c6cbd864e42afc23a04a951b8735c6167c80ae563635f3673c800ad3b"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7008.csv",
+    "sha256": "376cd749c9520a612be68372fd25473c69899d48c3593c48f19b9cf23f69cc06"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7009.csv",
+    "sha256": "ec4dc221899e78d81c01005f73f680b275c0c73b766b38105398a46586eb7252"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7010.csv",
+    "sha256": "41e0f68b19d5f2916c6f1e1fcdd0f90d3ffdbc4bcd554d9d50cd6b9f987d94f5"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7011.csv",
+    "sha256": "3cc7c2d27972503f5d825b602be2eb1ca415c0571ca0b3a174f4c20d5c333147"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7012.csv",
+    "sha256": "8966e32353cc9b54a8341e774f8ba66474887161d8db3a3c2f97d4d013aa66be"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7013.csv",
+    "sha256": "a07ac95e5bb94ab53ed0d7d9c994c5d06cbc3f76ea9c4c699654f75b64f7138f"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7014.csv",
+    "sha256": "435639da83a9cc894737d13f9157c606c27d09c77d37e548ccfa7b18a10508ba"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7015.csv",
+    "sha256": "2e5ce59511c1a5c20c5e2f921fe4646eac768e002b129d0e9f45bf59f35d59e9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7016.csv",
+    "sha256": "ce2a1cbacde44d64d8f310029f0392d4178e9b340aac9d5bf29090acb1cb18d9"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7017.csv",
+    "sha256": "85cda13705e514843bc98d458a124e3c673f087a7267c5b405e1aea2959af775"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7018.csv",
+    "sha256": "551b221713e108dedf1945b4f771b12edda0a374c7d73334bf984610ee850813"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/interventions_raw_optimizer10_flow90_fixed_9000_seed_7019.csv",
+    "sha256": "d9c23d96cacd02351eea43d574426cb93309f8860123b345e76eb4e4e972cacb"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/training_metrics.csv",
+    "sha256": "aca5101ee914f51457cba89052b6d6853fab4ea1f3963c4eada43dbf270ffbb8"
+  },
+  {
+    "file": "results/source_scaling/hybrid_0500_runs/trial_summary.csv",
+    "sha256": "a8655a0ce27db2dbd970a55e60c8ea41d84f548815007cddaac4ac6d8c88043f"
+  },
+  {
+    "file": "results/source_sampling/seed101_strength010_interval500/summary.json",
+    "sha256": "c0690e722e9b9c073badddc2873ee5ec627a4ee9feb1401b99640be8855ccc95"
+  },
+  {
+    "file": "results/source_sampling/seed102_strength010_interval500/summary.json",
+    "sha256": "5349c4f5fa39cf79c3f8dc56cb71ada811bba0b59e41033e4d125b06146dfc29"
+  },
+  {
+    "file": "results/source_sampling/seed103_strength010_interval500/summary.json",
+    "sha256": "b4f1d6df7cc8e88e671c9bc6abd938b0599919c41e18b8314639414e5ebce0f8"
+  },
+  {
+    "file": "results/source_sampling/seed104_strength010_interval500/summary.json",
+    "sha256": "e1823d651d33efd172e68d35ecebb760b7b97f31c2906f270418b94dd52d2d07"
+  },
+  {
+    "file": "results/source_sampling/seed105_strength010_interval500/summary.json",
+    "sha256": "6b345defa917e7f76fa27c20ea8ac76535247fcc85235acb97ddd05bca837d65"
+  },
+  {
+    "file": "results/source_sampling/seed105_strength010_interval500/stage1/metrics.csv",
+    "sha256": "c730d4189e149f07a27417c861b0ee880ad25af2dfe57ed1d449ac8450a0d859"
+  },
+  {
+    "file": "results/source_sampling/seed105_strength010_interval500/stage2/metrics.csv",
+    "sha256": "4f2bff7bf9062aca5fe2dfc29a1bd89bf0fdc0901fb65b7c03cf9da3648cc7ac"
+  },
+  {
+    "file": "results/source_sampling/seed104_strength010_interval500/stage1/metrics.csv",
+    "sha256": "288d55660e62551445cbed8ed6492f908d9b25f8f6fca78b21540add143884d2"
+  },
+  {
+    "file": "results/source_sampling/seed104_strength010_interval500/stage2/metrics.csv",
+    "sha256": "30eb7a887822007101fb63095e80f5b16cce8bb9fad50af33673b2f23292a460"
+  },
+  {
+    "file": "results/source_sampling/seed103_strength010_interval500/stage1/metrics.csv",
+    "sha256": "5cbc26f18a572fad8601b4430dbfdd46f18c5613bc604bd2366b1f7f00c227fc"
+  },
+  {
+    "file": "results/source_sampling/seed103_strength010_interval500/stage2/metrics.csv",
+    "sha256": "5acb3bcfdae808aeb2468df0f075022093b209c53223b2f96740ccfa30edb60e"
+  },
+  {
+    "file": "results/source_sampling/seed102_strength010_interval500/stage1/metrics.csv",
+    "sha256": "c5519aa482aadf03adbceaa6810972b94f395a545da06c490a04d6c25065cebf"
+  },
+  {
+    "file": "results/source_sampling/seed102_strength010_interval500/stage2/metrics.csv",
+    "sha256": "c36c63e3f88f52f7d979f3970182d667d496b665e2655c2b613629dc5010ca93"
+  },
+  {
+    "file": "results/source_sampling/seed101_strength010_interval500/stage1/metrics.csv",
+    "sha256": "fcd25c86466a59dde1c1b9170062dfb57a6880fa99d5a40e005fc4546c6d0d1e"
+  },
+  {
+    "file": "results/source_sampling/seed101_strength010_interval500/stage2/metrics.csv",
+    "sha256": "dd9d66cac7bebe188867b3e7152752632993fc2863e750d3d2b6fb63c6ac26af"
+  },
+  {
+    "file": "results/horizons/seed101_horizon100/summary.json",
+    "sha256": "b014ca2ff304619d94d1b337f2e22aa815dd0cac8381c671ab3569f372e93154"
+  },
+  {
+    "file": "results/horizons/seed101_horizon200/summary.json",
+    "sha256": "546f27f28c5f054bd39529072fe0d7fc5c485b2aeecb1f863959304055c12cd1"
+  },
+  {
+    "file": "results/horizons/seed102_horizon100/summary.json",
+    "sha256": "c54644d23d4623dd6cf7215295615985335bb7f7dc5f7489a0acf682b3919b24"
+  },
+  {
+    "file": "results/horizons/seed102_horizon200/summary.json",
+    "sha256": "8105e2fffcbbb4044fe8d2b84864c1b5bf5820d428d64057de8e48d8a17d1554"
+  },
+  {
+    "file": "results/horizons/seed103_horizon100/summary.json",
+    "sha256": "432b24a491c48d0b40bd18f2aafe95fa870a0ee9ea03c342277257e4cbd36c21"
+  },
+  {
+    "file": "results/horizons/seed103_horizon200/summary.json",
+    "sha256": "81d93250f3bfa1e35186c931312c741c02ae5ac7b12a38feb79cbacf79f62a3b"
+  },
+  {
+    "file": "results/horizons/seed104_horizon100/summary.json",
+    "sha256": "1b073fd3d752fbff082a3298e3e4f746cfdae798112fce27171146841b4832f7"
+  },
+  {
+    "file": "results/horizons/seed104_horizon200/summary.json",
+    "sha256": "69e5bf5ab731ae2c4e3bd5a972d427b8daa956e61922a0b35a890dd79b80ee5d"
+  },
+  {
+    "file": "results/horizons/seed105_horizon100/summary.json",
+    "sha256": "cf238b20d55ca7d74a62f6d97e18c7b276a4d370224cad41ea42733ab0cbf2bd"
+  },
+  {
+    "file": "results/horizons/seed105_horizon200/summary.json",
+    "sha256": "605ffaa60d646da44c11df7bfb19754dfa9a2cb4bfaae876556b5276e4bfcbaa"
+  },
+  {
+    "file": "results/horizons/seed105_horizon200/stage1/metrics.csv",
+    "sha256": "35eb49fe73eda39b7a50bee9d8c4199b318337bb7cef671c5f7862427d25ab64"
+  },
+  {
+    "file": "results/horizons/seed105_horizon200/stage2/metrics.csv",
+    "sha256": "3dfd6b5c887f15e7a9d57d5f6e271f85be5b9d3135725607e4f6e841f6f295dd"
+  },
+  {
+    "file": "results/horizons/seed105_horizon100/stage1/metrics.csv",
+    "sha256": "653a745fa3cb55e810ad1e63d8d2c65d05aee7e52a022f65ce536bd49cd2f105"
+  },
+  {
+    "file": "results/horizons/seed105_horizon100/stage2/metrics.csv",
+    "sha256": "5cf370abf591bd68ee96e2b86f908479c248ef75c7209394d04d8287e2739af4"
+  },
+  {
+    "file": "results/horizons/seed104_horizon200/stage1/metrics.csv",
+    "sha256": "6c07d850ef334cf1f2d223ed3d707510e4e0b699921012891206d0e24fafba73"
+  },
+  {
+    "file": "results/horizons/seed104_horizon200/stage2/metrics.csv",
+    "sha256": "6445afd3d48d2e7c3f2565971c095c23fb3973ad6dcb7ad5f41f9ea8eca076b7"
+  },
+  {
+    "file": "results/horizons/seed104_horizon100/stage1/metrics.csv",
+    "sha256": "32cc66b4f7c42f5c14c9e21f402c1d40d03f4ad555456db7f86559971fad8a5c"
+  },
+  {
+    "file": "results/horizons/seed104_horizon100/stage2/metrics.csv",
+    "sha256": "b344bd9b087f4cd703fd5263bff3797a6164afbecda4aefca82cc01b8e6c180b"
+  },
+  {
+    "file": "results/horizons/seed103_horizon200/stage1/metrics.csv",
+    "sha256": "af021350104a605ac28b91cfd830bc6b1d0a19f06ab82c9768f75b5b530e0ac5"
+  },
+  {
+    "file": "results/horizons/seed103_horizon200/stage2/metrics.csv",
+    "sha256": "2d95a93e86fbd95922218326b41dabb3295ba603a58cb3850e7d9802f11d9498"
+  },
+  {
+    "file": "results/horizons/seed103_horizon100/stage1/metrics.csv",
+    "sha256": "e847dc4a2dc79d557e8208f9678f311eea8b99ae72590b057309f6638cfdc216"
+  },
+  {
+    "file": "results/horizons/seed103_horizon100/stage2/metrics.csv",
+    "sha256": "80e1cf57b80e3fa5ca2381090202c47652397e2c9259e211fb389158881c7c42"
+  },
+  {
+    "file": "results/horizons/seed102_horizon200/stage1/metrics.csv",
+    "sha256": "bde5ea547d2235cdb9f2fc6ab1aa76745dc041b03ef20e9d03a1820bf5076767"
+  },
+  {
+    "file": "results/horizons/seed102_horizon200/stage2/metrics.csv",
+    "sha256": "645b6f1eb98deeb5250f41b7c24533ff0a3a7d080aaebd3887c10e6eb60638e8"
+  },
+  {
+    "file": "results/horizons/seed102_horizon100/stage1/metrics.csv",
+    "sha256": "7eaafddf4c459bc0faf1e91187385bf1ac2ec4fd104e9790d46426a51eb229fb"
+  },
+  {
+    "file": "results/horizons/seed102_horizon100/stage2/metrics.csv",
+    "sha256": "da36b8d6e81509793bd6ce4d40b8b4a46c7c7493f6b795de04d75b5e4f13a0a1"
+  },
+  {
+    "file": "results/horizons/seed101_horizon200/stage1/metrics.csv",
+    "sha256": "ff6be96e698b67e334f1526c201effe712dca04dde9870a42bbaa71703fff45e"
+  },
+  {
+    "file": "results/horizons/seed101_horizon200/stage2/metrics.csv",
+    "sha256": "63f6ab280a1dd7f99f62caa3314522e1c617780a95ea090119abda72ff19cc15"
+  },
+  {
+    "file": "results/horizons/seed101_horizon100/stage1/metrics.csv",
+    "sha256": "c10cdde63169d0ab6f58254cad4642436127214c7e79b22d44c78183646c2ebe"
+  },
+  {
+    "file": "results/horizons/seed101_horizon100/stage2/metrics.csv",
+    "sha256": "3639a1ba21a192bc8734bd957e9a743f33366bf3bca8979a50ce4df1419cc077"
+  },
+  {
+    "file": "results/curriculum/seed101_strength000_interval500/summary.json",
+    "sha256": "bf8f8e2adf68199259ed82a6251b3020be0dee46d897599fde269d6ae0c860d5"
+  },
+  {
+    "file": "results/curriculum/seed101_strength010_interval500/summary.json",
+    "sha256": "405067455e8fb9c791b3dd31c7aa5da5267f90a967bf2d15bf60d36541691d20"
+  },
+  {
+    "file": "results/curriculum/seed102_strength000_interval500/summary.json",
+    "sha256": "23f2f6cdc4df345d50dc3d8427b98918da68b291b4959b4115bbbe81f24884a8"
+  },
+  {
+    "file": "results/curriculum/seed102_strength010_interval500/summary.json",
+    "sha256": "d902ce5ac0a150ccb43be525698c6308dd6eff53775e3f5af31acd184ebe3cdd"
+  },
+  {
+    "file": "results/curriculum/seed103_strength000_interval500/summary.json",
+    "sha256": "8bc4a77553bc16f74f5c4810e09cb5a09b2a24b19035b0f1d2644460f13271c9"
+  },
+  {
+    "file": "results/curriculum/seed103_strength010_interval500/summary.json",
+    "sha256": "07e898cdb741fe296239cb67de19d566f382e262360182cfac0240731916bef9"
+  },
+  {
+    "file": "results/curriculum/seed104_strength000_interval500/summary.json",
+    "sha256": "ccef80c5f0e46785c5b3ec1bb64b25d0acba7c83d6e412ebbd6fb7e400f2ecd3"
+  },
+  {
+    "file": "results/curriculum/seed104_strength010_interval500/summary.json",
+    "sha256": "160b6ce15a87027845ee6fca99dd93e28ef53a73ca410e1a4937b3f86856633f"
+  },
+  {
+    "file": "results/curriculum/seed105_strength000_interval500/summary.json",
+    "sha256": "47c5a6e3794fc06f05a48a9d1e24c7a0db3db6b6e2b9fdbfedb3915ed11ca02b"
+  },
+  {
+    "file": "results/curriculum/seed105_strength010_interval500/summary.json",
+    "sha256": "acdd37bc9c6fe136748f074787049eff0921d9f220d0eb253c36a0052df39661"
+  },
+  {
+    "file": "results/curriculum/seed105_strength010_interval500/stage1/metrics.csv",
+    "sha256": "d299070bf3b378bf325ad0c04afed215cf90a3872983021a2d25f284c37def73"
+  },
+  {
+    "file": "results/curriculum/seed105_strength010_interval500/stage2/metrics.csv",
+    "sha256": "31ab32227b2ea26894023d358c64c9c11c4925b834b22d0ae639964cb4c4efcb"
+  },
+  {
+    "file": "results/curriculum/seed105_strength000_interval500/stage1/metrics.csv",
+    "sha256": "f5ef299fa8869284b651795cad3f2df5d0f18443dff173b1009f0c9d022cd4c6"
+  },
+  {
+    "file": "results/curriculum/seed105_strength000_interval500/stage2/metrics.csv",
+    "sha256": "1c7062f21baf31778a1d219a3e9e363887ebc811b5181769b342ad7db3228890"
+  },
+  {
+    "file": "results/curriculum/seed104_strength010_interval500/stage1/metrics.csv",
+    "sha256": "3c7d30471e1bd6e43f006b3ffd1467605c6fba82131d3c7f80abe60594e9e6f4"
+  },
+  {
+    "file": "results/curriculum/seed104_strength010_interval500/stage2/metrics.csv",
+    "sha256": "6efdfa5c4eceecfa29d2977ae59a642e534a4dbf67b5c6f8e68a8f9d3da8c753"
+  },
+  {
+    "file": "results/curriculum/seed104_strength000_interval500/stage1/metrics.csv",
+    "sha256": "4c1a7f46087068c70adfa066d320aa3e85f21862622b498c19f93a54df3d3aa9"
+  },
+  {
+    "file": "results/curriculum/seed104_strength000_interval500/stage2/metrics.csv",
+    "sha256": "7a18516e80202900752c6fcb9c408027858125bd32133df2a6f2be8ffd9f18fb"
+  },
+  {
+    "file": "results/curriculum/seed103_strength010_interval500/stage1/metrics.csv",
+    "sha256": "845f609ee0f5ac21d71d3d811811b2a9f601b26b472208c31563b5d2b37c7222"
+  },
+  {
+    "file": "results/curriculum/seed103_strength010_interval500/stage2/metrics.csv",
+    "sha256": "bdaaa83c2d7f9140e643a9627733f47f3c45a6442a97355d49f475592a4d88d6"
+  },
+  {
+    "file": "results/curriculum/seed103_strength000_interval500/stage1/metrics.csv",
+    "sha256": "80b5887f61f378e2698e87938bd5e87928157a330c27c3b67a28974ca77605f0"
+  },
+  {
+    "file": "results/curriculum/seed103_strength000_interval500/stage2/metrics.csv",
+    "sha256": "2dd934044c23ae93b5e3f0105bdc01887039b3af876f350d459c9c5d5f79c10c"
+  },
+  {
+    "file": "results/curriculum/seed102_strength010_interval500/stage1/metrics.csv",
+    "sha256": "48b8c3b65b2aba38e7c8ae07a723d3e275408c4c1748691493c135bd393fa009"
+  },
+  {
+    "file": "results/curriculum/seed102_strength010_interval500/stage2/metrics.csv",
+    "sha256": "2539d62ca9aae82f2e85fa12a7f2c73c11505ec8342508f060835060029d71e5"
+  },
+  {
+    "file": "results/curriculum/seed102_strength000_interval500/stage1/metrics.csv",
+    "sha256": "547d1b8665f5f7a3c2b81305f6b7518708dc7c8ca485a3b364a38706a18e41c2"
+  },
+  {
+    "file": "results/curriculum/seed102_strength000_interval500/stage2/metrics.csv",
+    "sha256": "40ee4b5621ea1e563c51d30c339b7592639b936c053bb1f9fb932e0aa5b662c2"
+  },
+  {
+    "file": "results/curriculum/seed101_strength010_interval500/stage1/metrics.csv",
+    "sha256": "9e80d3b6802ca77824d2d0601b67008b6ec53d958264c723b3f9d5c5c355a9ef"
+  },
+  {
+    "file": "results/curriculum/seed101_strength010_interval500/stage2/metrics.csv",
+    "sha256": "85a08aa82e83de472c1ac91e8e342bc562ce54ddffa66383e9b03e5d608e4e70"
+  },
+  {
+    "file": "results/curriculum/seed101_strength000_interval500/stage1/metrics.csv",
+    "sha256": "a94c1ff85f0ce7106d64497ef1b48e649c55b9bed66919660a609141d94c32ff"
+  },
+  {
+    "file": "results/curriculum/seed101_strength000_interval500/stage2/metrics.csv",
+    "sha256": "413e954772f98cd082c66e69b85cab3b277c938dd1881cd26a4667eb9c449b22"
+  },
+  {
+    "file": "results/controls/seed101_imf_preserve/summary.json",
+    "sha256": "ab5d03530c6a0d15583eaf5469d6f145c97c48fa667ae0b0cd4e92a90b3bc7c2"
+  },
+  {
+    "file": "results/controls/seed101_imf_reset/summary.json",
+    "sha256": "e3ec9a9ad255eb769687f03e2dea53dab399813c6b6588367527a83a714a909d"
+  },
+  {
+    "file": "results/controls/seed101_random_matched/summary.json",
+    "sha256": "98aebdde5be9059d6cf7ec3757a63454f5b016f97755023013987fd0e1ac2960"
+  },
+  {
+    "file": "results/controls/seed101_reset_only/summary.json",
+    "sha256": "9f8e67eeba048a32ed110863d2b2d3fe139f1d2575b704a08fbe31ce00a0e286"
+  },
+  {
+    "file": "results/controls/seed102_imf_preserve/summary.json",
+    "sha256": "98e210a8047b33d302ed7f3b4843dfdae230d9056d3c5b6ed91c4ae88e88d5db"
+  },
+  {
+    "file": "results/controls/seed102_imf_reset/summary.json",
+    "sha256": "c386c84a98fa5a30300c820889cee036a80b7577f11281312baae09552965355"
+  },
+  {
+    "file": "results/controls/seed102_random_matched/summary.json",
+    "sha256": "e184d3fd92d484da582060ad1e7febfd1255d567cac158e2c84e2722413c5779"
+  },
+  {
+    "file": "results/controls/seed102_reset_only/summary.json",
+    "sha256": "35261cd86944356a2fa559f749fd3f707a4c50c8d1e1244d783591ab3acd0d25"
+  },
+  {
+    "file": "results/controls/seed103_imf_preserve/summary.json",
+    "sha256": "e9013f94f5c7d8a2a70f409c54834321d0f6f4e810d0c8ed8796c64f99c39cce"
+  },
+  {
+    "file": "results/controls/seed103_imf_reset/summary.json",
+    "sha256": "df23d63fa360467b1016dc6bb4a306af4a51c0daa2d8fb69e1ff91f5594daa5b"
+  },
+  {
+    "file": "results/controls/seed103_random_matched/summary.json",
+    "sha256": "c831f5b70c8e0909a22d52b0bf76c3c6b8437e5d1d94232f732513be85bc49d3"
+  },
+  {
+    "file": "results/controls/seed103_reset_only/summary.json",
+    "sha256": "eb07b89af80ea860ff4acd6f61f5ee8d40fbd541ac1c92bab3759a137da3d647"
+  },
+  {
+    "file": "results/controls/seed104_imf_preserve/summary.json",
+    "sha256": "ff3854964d604b918dbfff86f0cd13c101f6479805351f14aa33017202c8e0d6"
+  },
+  {
+    "file": "results/controls/seed104_imf_reset/summary.json",
+    "sha256": "651d75bdc3d627eee56b8b2b1193144fe7dbc57ca8f44678c63fc19cd612b09e"
+  },
+  {
+    "file": "results/controls/seed104_random_matched/summary.json",
+    "sha256": "eb8f4fb3c2999be195c1cf47cc070c5dec668b0080e23db1c95427efb81a3a63"
+  },
+  {
+    "file": "results/controls/seed104_reset_only/summary.json",
+    "sha256": "01107fb63a56bdd7f416ec1382a41bb4ac5066a4df2122b63ae68acea899c122"
+  },
+  {
+    "file": "results/controls/seed105_imf_preserve/summary.json",
+    "sha256": "0b2178c0bbbe5ea883534c152dd565c5589ef55b0d2ab7ff19a6746abf4f0e1d"
+  },
+  {
+    "file": "results/controls/seed105_imf_reset/summary.json",
+    "sha256": "bb7e1a96eb07b2fbf540d0a9f477a8a065023ad3359933977335bb42441ee46e"
+  },
+  {
+    "file": "results/controls/seed105_random_matched/summary.json",
+    "sha256": "ad610563eb2d3548618ff8db703fdd4764f7a3589db5d6d34b43a90b496ba220"
+  },
+  {
+    "file": "results/controls/seed105_reset_only/summary.json",
+    "sha256": "c26aa98f0147eccbb6de9994fdab4a4dca5685b69b48c461edf48cfdaeb29aab"
+  },
+  {
+    "file": "results/controls/seed105_reset_only/stage1/metrics.csv",
+    "sha256": "90fd6a4ddc0af3c1cc07df7c034a83e4badba1acb309f2065778e2b9a57b00a1"
+  },
+  {
+    "file": "results/controls/seed105_reset_only/stage2/metrics.csv",
+    "sha256": "b2f2102b0dc60384aa1574cc758a9bd5af11786c2a5f2a54e9372dea8b995a03"
+  },
+  {
+    "file": "results/controls/seed105_random_matched/stage1/metrics.csv",
+    "sha256": "a28f23531b082fddd726fa7674afc10b57eb449b60b936e937f7c7ac543f42c2"
+  },
+  {
+    "file": "results/controls/seed105_random_matched/stage2/metrics.csv",
+    "sha256": "fc40d994e90e97c19f3adac8f91c6c7365f4348bcf097b67ebdc4660ebe51ba2"
+  },
+  {
+    "file": "results/controls/seed105_imf_reset/stage1/metrics.csv",
+    "sha256": "d299070bf3b378bf325ad0c04afed215cf90a3872983021a2d25f284c37def73"
+  },
+  {
+    "file": "results/controls/seed105_imf_reset/stage2/metrics.csv",
+    "sha256": "31ab32227b2ea26894023d358c64c9c11c4925b834b22d0ae639964cb4c4efcb"
+  },
+  {
+    "file": "results/controls/seed105_imf_preserve/stage1/metrics.csv",
+    "sha256": "6c923314e236b569b0c256c705cd5b81b634e82854e82362bfca04bd9fe2075a"
+  },
+  {
+    "file": "results/controls/seed105_imf_preserve/stage2/metrics.csv",
+    "sha256": "0da5ed5a8687950ba24231ae0704e18eb0d952912ccb9bebba644faa05db2849"
+  },
+  {
+    "file": "results/controls/seed104_reset_only/stage1/metrics.csv",
+    "sha256": "daa46ee6172e40fbdb9aaed9fd8e7060b05d98325b71579199068d6a95a7e375"
+  },
+  {
+    "file": "results/controls/seed104_reset_only/stage2/metrics.csv",
+    "sha256": "b8ccd2b3a9c0cee717439dc979edad785045f89ef82d65bed3e5413aa552097f"
+  },
+  {
+    "file": "results/controls/seed104_random_matched/stage1/metrics.csv",
+    "sha256": "bcb35fbfeee8849cec5e6ddee713539e67514faf949eaa178c6aa02f0f074be8"
+  },
+  {
+    "file": "results/controls/seed104_random_matched/stage2/metrics.csv",
+    "sha256": "b91f341a7955237e897c274e8b499b4b4e63ccfa05c8e1dcabe35b63f5d453b0"
+  },
+  {
+    "file": "results/controls/seed104_imf_reset/stage1/metrics.csv",
+    "sha256": "3c7d30471e1bd6e43f006b3ffd1467605c6fba82131d3c7f80abe60594e9e6f4"
+  },
+  {
+    "file": "results/controls/seed104_imf_reset/stage2/metrics.csv",
+    "sha256": "6efdfa5c4eceecfa29d2977ae59a642e534a4dbf67b5c6f8e68a8f9d3da8c753"
+  },
+  {
+    "file": "results/controls/seed104_imf_preserve/stage1/metrics.csv",
+    "sha256": "a060f1ba5e1c84dd9dfa719d795a22cc3575701a388c58429e7f783de10a308c"
+  },
+  {
+    "file": "results/controls/seed104_imf_preserve/stage2/metrics.csv",
+    "sha256": "c486cb99347627b3b9ce0c7ba591212e76c835f0c2e766561395452dee8a96f2"
+  },
+  {
+    "file": "results/controls/seed103_reset_only/stage1/metrics.csv",
+    "sha256": "50662de42842c13b4a2f8b5e0e9a51717ac4de0d0f557b5ec3e0fb0c2fbf87d9"
+  },
+  {
+    "file": "results/controls/seed103_reset_only/stage2/metrics.csv",
+    "sha256": "4e421da42ea0de1aabe53301a200081524b0c9731995074255632eee5bb14971"
+  },
+  {
+    "file": "results/controls/seed103_random_matched/stage1/metrics.csv",
+    "sha256": "738116bcc8e0561ce3811db2f7929d0eb3240465ea3ac9889bd02d5a7e85d755"
+  },
+  {
+    "file": "results/controls/seed103_random_matched/stage2/metrics.csv",
+    "sha256": "598535e1317712cb44abfd46f4b2e629297c2506ce090a94d9e1d06163452888"
+  },
+  {
+    "file": "results/controls/seed103_imf_reset/stage1/metrics.csv",
+    "sha256": "845f609ee0f5ac21d71d3d811811b2a9f601b26b472208c31563b5d2b37c7222"
+  },
+  {
+    "file": "results/controls/seed103_imf_reset/stage2/metrics.csv",
+    "sha256": "bdaaa83c2d7f9140e643a9627733f47f3c45a6442a97355d49f475592a4d88d6"
+  },
+  {
+    "file": "results/controls/seed103_imf_preserve/stage1/metrics.csv",
+    "sha256": "17211b2c79252502fa1289c2f37d4ccabb4b046d2330f52e49773dac5359fe83"
+  },
+  {
+    "file": "results/controls/seed103_imf_preserve/stage2/metrics.csv",
+    "sha256": "61d3a9e2492ed53ffaf77fa06004e4f906fe0e932e01149df418329ee8dd0573"
+  },
+  {
+    "file": "results/controls/seed102_reset_only/stage1/metrics.csv",
+    "sha256": "bb7937268743a1a5f8ab8860bf090f7ff340b8eac7b32733481b708a9609f6cf"
+  },
+  {
+    "file": "results/controls/seed102_reset_only/stage2/metrics.csv",
+    "sha256": "c5ec76c8554af67b5c5f2d2a7ace29a939760d2ed8f73dff0391512d0ac7aec8"
+  },
+  {
+    "file": "results/controls/seed102_random_matched/stage1/metrics.csv",
+    "sha256": "e3ff08b93beb457fa2d235c5bf124dd00474145137640f2bf74ed94d739bbe6d"
+  },
+  {
+    "file": "results/controls/seed102_random_matched/stage2/metrics.csv",
+    "sha256": "20a6711dcc66cf04f9f6b3741d566e6bed2d466e0b6f42f9887130055672ca5f"
+  },
+  {
+    "file": "results/controls/seed102_imf_reset/stage1/metrics.csv",
+    "sha256": "48b8c3b65b2aba38e7c8ae07a723d3e275408c4c1748691493c135bd393fa009"
+  },
+  {
+    "file": "results/controls/seed102_imf_reset/stage2/metrics.csv",
+    "sha256": "2539d62ca9aae82f2e85fa12a7f2c73c11505ec8342508f060835060029d71e5"
+  },
+  {
+    "file": "results/controls/seed102_imf_preserve/stage1/metrics.csv",
+    "sha256": "f69d873ce21f70534039f444eebe8b7861734f4677667674e2c936bffab322ed"
+  },
+  {
+    "file": "results/controls/seed102_imf_preserve/stage2/metrics.csv",
+    "sha256": "a5429ef1e651b0726c844626607b28747aae2ebdb79a445b95c9f25696c814f9"
+  },
+  {
+    "file": "results/controls/seed101_reset_only/stage1/metrics.csv",
+    "sha256": "46b9685616f5f70fcc8c931f58a2e03bc0363251241c6d7714ed7bffefc272f1"
+  },
+  {
+    "file": "results/controls/seed101_reset_only/stage2/metrics.csv",
+    "sha256": "173d58d18113b6b268b417d49f50b7ba543e4faf3e23cbd29a6e726126af4205"
+  },
+  {
+    "file": "results/controls/seed101_random_matched/stage1/metrics.csv",
+    "sha256": "857fd803937ceae589423b698c4825b1286bb0f9b85bf0f3b2aafae82f04651d"
+  },
+  {
+    "file": "results/controls/seed101_random_matched/stage2/metrics.csv",
+    "sha256": "05372b68ff392dc556a438a48f4dae03585751f22f5abda9c57ccef55e7a7d1f"
+  },
+  {
+    "file": "results/controls/seed101_imf_reset/stage1/metrics.csv",
+    "sha256": "9e80d3b6802ca77824d2d0601b67008b6ec53d958264c723b3f9d5c5c355a9ef"
+  },
+  {
+    "file": "results/controls/seed101_imf_reset/stage2/metrics.csv",
+    "sha256": "85a08aa82e83de472c1ac91e8e342bc562ce54ddffa66383e9b03e5d608e4e70"
+  },
+  {
+    "file": "results/controls/seed101_imf_preserve/stage1/metrics.csv",
+    "sha256": "d3d73baac2c7bf9288d3d2b4540202377628c2f2c4b4cb593e695bdc03e65570"
+  },
+  {
+    "file": "results/controls/seed101_imf_preserve/stage2/metrics.csv",
+    "sha256": "c4ee13c463f2c28aeaf5e0f9bac0ff7d462b9dfb526aa2188aa950adb6605db0"
+  }
+]

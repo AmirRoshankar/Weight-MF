@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "weight-mf"
+version = "0.1.0"
+description = "Transferable weight dynamics for controlled arithmetic"
+requires-python = ">=3.11"
+dependencies = ["torch>=2.9", "numpy", "pandas", "matplotlib"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
