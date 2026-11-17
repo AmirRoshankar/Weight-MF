@@ -14,3 +14,5 @@ For independent verification, run Gitleaks over all history and inspect local-pa
     git log --all --format=fuller
 
 Do not commit artifacts/, data/, runs/, environment files, or local credentials.
+
+A post-publication API check confirmed that a previous, now-unreferenced commit is still retrievable by its identifier on GitHub. The fresh clone and all published branch references contain only the sanitized history. Removing GitHub-retained views/objects requires a host-side purge; branch rewriting alone does not complete that erasure.
