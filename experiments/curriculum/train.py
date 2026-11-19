@@ -6,7 +6,7 @@ from modeling import (
     IMFCompatiblePaperTransformer,
     copy_paper_to_bridge,
 )
-from grokflow.transformer_weight_meanflow import (
+from weightmf.transformer_weight_meanflow import (
     ConditionalTransformerWeightGenerator,
     TransformerWeightGeneratorConfig,
     canonical_tensor_and_row_ids,

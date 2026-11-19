@@ -10,8 +10,8 @@ from modeling import (
     compatible_block_rows,
     copy_rows_to_compatible_block,
 )
-from grokflow.config import GrokConfig
-from grokflow.operation_data import make_binary_operation
+from weightmf.config import TaskConfig
+from weightmf.operation_data import make_binary_operation
 
 
 class ModelTests(unittest.TestCase):
@@ -33,7 +33,7 @@ class ModelTests(unittest.TestCase):
         )
 
     def test_modular_division(self):
-        d = make_binary_operation(GrokConfig(modulus=97), 101, "division")
+        d = make_binary_operation(TaskConfig(modulus=97), 101, "division")
         x = torch.cat([d.train_x, d.val_x])
         y = torch.cat([d.train_y, d.val_y])
         self.assertTrue(bool((x[:, 1] != 0).all()))

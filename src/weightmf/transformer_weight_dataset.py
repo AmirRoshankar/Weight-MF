@@ -9,10 +9,10 @@ from pathlib import Path
 import torch
 from torch.nn import functional as F
 
-from .config import GrokConfig
+from .config import TaskConfig
 from .data import make_modular_addition
 from .embedding_pair_dataset import sample_transition_pairs
-from .model import GrokTransformer
+from .model import TaskTransformer
 from .train import evaluate, seed_everything
 
 
@@ -29,8 +29,8 @@ TRANSFORMER_WEIGHT_NAMES = (
 @dataclass
 class TransformerWeightCollectionConfig:
     snapshot_every: int = 25
-    pre_grok_steps: int = 2_500
-    post_grok_steps: int = 2_000
+    pre_threshold_steps: int = 2_500
+    post_threshold_steps: int = 2_000
     crossing_pairs: int = 4
     before_pairs: int = 3
     after_pairs: int = 3
@@ -47,7 +47,7 @@ class TransformerWeightCollectionConfig:
 Snapshot = tuple[int, dict[str, torch.Tensor], float, float, float, float]
 
 
-def transformer_weight_snapshot(model: GrokTransformer) -> dict[str, torch.Tensor]:
+def transformer_weight_snapshot(model: TaskTransformer) -> dict[str, torch.Tensor]:
     """Copy the six transformer-block matrices without flattening them."""
     state = model.state_dict()
     return {
@@ -92,15 +92,15 @@ def canonical_row_layout() -> list[dict]:
 def _write_shard(
     output_file: Path,
     seed: int,
-    grok_step: int,
+    threshold_step: int,
     memorization_step: int | None,
     snapshots: list[Snapshot],
-    grok_config: GrokConfig,
+    task_config: TaskConfig,
     pair_config: TransformerWeightCollectionConfig,
     wall_seconds: float,
 ) -> dict:
     steps = [snapshot[0] for snapshot in snapshots]
-    sampled = sample_transition_pairs(steps, grok_step, pair_config, seed + 19_000_000)
+    sampled = sample_transition_pairs(steps, threshold_step, pair_config, seed + 19_000_000)
     used = sorted({index for start, end, _ in sampled for index in (start, end)})
     compact = {old: new for new, old in enumerate(used)}
     weights = {
@@ -117,7 +117,7 @@ def _write_shard(
         "format_version": 1,
         "scope": "transformer_block_weights",
         "seed": seed,
-        "grok_step": grok_step,
+        "threshold_step": threshold_step,
         "memorization_step": memorization_step,
         "steps": kept_steps,
         "weights": weights,
@@ -129,13 +129,13 @@ def _write_shard(
         "train_accuracies": torch.tensor([snapshots[index][3] for index in used]),
         "validation_losses": torch.tensor([snapshots[index][4] for index in used]),
         "validation_accuracies": torch.tensor([snapshots[index][5] for index in used]),
-        "grok_config": grok_config.to_dict(),
+        "task_config": task_config.to_dict(),
         "pair_collection_config": asdict(pair_config),
     }
     torch.save(payload, output_file)
     return {
         "seed": seed,
-        "grok_step": grok_step,
+        "threshold_step": threshold_step,
         "memorization_step": memorization_step,
         "pairs": len(sampled),
         "unique_checkpoints": len(used),
@@ -151,33 +151,33 @@ def _write_shard(
 
 
 def collect_one_transformer_weight_shard(
-    grok_config: GrokConfig,
+    task_config: TaskConfig,
     pair_config: TransformerWeightCollectionConfig,
     seed: int,
     output_file: Path,
     device: str = "cuda",
 ) -> dict | None:
     seed_everything(seed)
-    data = make_modular_addition(grok_config, split_seed=seed)
+    data = make_modular_addition(task_config, split_seed=seed)
     train_x, train_y = data.train_x.to(device), data.train_y.to(device)
     val_x, val_y = data.val_x.to(device), data.val_y.to(device)
-    model = GrokTransformer(grok_config).to(device)
+    model = TaskTransformer(task_config).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(),
-        lr=grok_config.learning_rate,
-        weight_decay=grok_config.weight_decay,
+        lr=task_config.learning_rate,
+        weight_decay=task_config.weight_decay,
     )
-    detection_lag = grok_config.log_every * (grok_config.grok_patience_logs - 1)
+    detection_lag = task_config.log_every * (task_config.threshold_patience_logs - 1)
     rolling_count = (
         math.ceil(
-            (pair_config.pre_grok_steps + detection_lag) / pair_config.snapshot_every
+            (pair_config.pre_threshold_steps + detection_lag) / pair_config.snapshot_every
         )
         + 4
     )
     rolling: deque[Snapshot] = deque(maxlen=rolling_count)
     retained: list[Snapshot] | None = None
-    grok_candidates: list[int] = []
-    grok_step = memorization_step = None
+    threshold_candidates: list[int] = []
+    threshold_step = memorization_step = None
     started = time.perf_counter()
 
     model.eval()
@@ -194,14 +194,14 @@ def collect_one_transformer_weight_shard(
         )
     )
 
-    for step in range(1, grok_config.max_steps + 1):
+    for step in range(1, task_config.max_steps + 1):
         model.train()
         optimizer.zero_grad(set_to_none=True)
         loss = F.cross_entropy(model(train_x), train_y)
         loss.backward()
         optimizer.step()
         snapshot_due = step % pair_config.snapshot_every == 0
-        log_due = step == 1 or step % grok_config.log_every == 0
+        log_due = step == 1 or step % task_config.log_every == 0
         metrics_due = snapshot_due or log_due
         train_loss = train_acc = val_loss = val_acc = float("nan")
         if metrics_due:
@@ -224,24 +224,24 @@ def collect_one_transformer_weight_shard(
         if log_due:
             if memorization_step is None and train_acc >= 0.99:
                 memorization_step = step
-            if train_acc >= 0.99 and val_acc >= grok_config.grok_accuracy:
-                grok_candidates.append(step)
+            if train_acc >= 0.99 and val_acc >= task_config.threshold_accuracy:
+                threshold_candidates.append(step)
                 if (
-                    len(grok_candidates) >= grok_config.grok_patience_logs
-                    and grok_step is None
+                    len(threshold_candidates) >= task_config.threshold_patience_logs
+                    and threshold_step is None
                 ):
-                    grok_step = grok_candidates[-grok_config.grok_patience_logs]
+                    threshold_step = threshold_candidates[-task_config.threshold_patience_logs]
                     retained = list(rolling)
             else:
-                grok_candidates.clear()
-        if grok_step is not None and step >= grok_step + pair_config.post_grok_steps:
+                threshold_candidates.clear()
+        if threshold_step is not None and step >= threshold_step + pair_config.post_threshold_steps:
             break
 
-    if grok_step is None or retained is None:
+    if threshold_step is None or retained is None:
         return None
     low, high = (
-        grok_step - pair_config.pre_grok_steps,
-        grok_step + pair_config.post_grok_steps,
+        threshold_step - pair_config.pre_threshold_steps,
+        threshold_step + pair_config.post_threshold_steps,
     )
     retained = [snapshot for snapshot in retained if low <= snapshot[0] <= high]
     if retained[-1][0] < step:
@@ -261,10 +261,10 @@ def collect_one_transformer_weight_shard(
     return _write_shard(
         output_file,
         seed,
-        grok_step,
+        threshold_step,
         memorization_step,
         retained,
-        grok_config,
+        task_config,
         pair_config,
         time.perf_counter() - started,
     )

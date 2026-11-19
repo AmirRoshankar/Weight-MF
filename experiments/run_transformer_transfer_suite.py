@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from grokflow.transformer_weight_downstream import run_transformer_transfer_suite
+from weightmf.transformer_weight_downstream import run_transformer_transfer_suite
 
 
 DEFAULT_TASKS = (

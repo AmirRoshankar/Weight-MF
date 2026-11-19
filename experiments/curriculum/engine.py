@@ -16,8 +16,8 @@ from modeling import (
     IMF_WEIGHT_NAMES,
 )
 from train import make_matched_models, load_imf, _normalize
-from grokflow.meanflow_objective import sample_improved_meanflow
-from grokflow.transformer_weight_meanflow_training import denormalize_transformer_rows
+from weightmf.meanflow_objective import sample_improved_meanflow
+from weightmf.transformer_weight_meanflow_training import denormalize_transformer_rows
 
 BASE = Path(__file__).resolve().parents[2]
 OUT = BASE / "results/arithmetic_curriculum_imf_v1"

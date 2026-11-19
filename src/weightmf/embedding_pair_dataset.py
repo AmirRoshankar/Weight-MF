@@ -11,17 +11,17 @@ from pathlib import Path
 import torch
 from torch.nn import functional as F
 
-from .config import GrokConfig
+from .config import TaskConfig
 from .data import make_modular_addition
-from .model import GrokTransformer
+from .model import TaskTransformer
 from .train import evaluate, seed_everything
 
 
 @dataclass
 class EmbeddingPairCollectionConfig:
     snapshot_every: int = 25
-    pre_grok_steps: int = 2_500
-    post_grok_steps: int = 2_000
+    pre_threshold_steps: int = 2_500
+    post_threshold_steps: int = 2_000
     crossing_pairs: int = 4
     before_pairs: int = 3
     after_pairs: int = 3
@@ -37,32 +37,32 @@ class EmbeddingPairCollectionConfig:
         return self.crossing_pairs + self.before_pairs + self.after_pairs
 
 
-def _embedding_snapshot(model: GrokTransformer) -> torch.Tensor:
+def _embedding_snapshot(model: TaskTransformer) -> torch.Tensor:
     return model.token_embedding.weight.detach().float().cpu().clone()
 
 
 def _weighted_choice(
     candidates: list[int],
     steps: list[int],
-    grok_step: int,
+    threshold_step: int,
     temperature: float,
     rng: random.Random,
 ) -> int:
     weights = [
-        math.exp(-abs(steps[index] - grok_step) / temperature) + 0.02
+        math.exp(-abs(steps[index] - threshold_step) / temperature) + 0.02
         for index in candidates
     ]
     return rng.choices(candidates, weights=weights, k=1)[0]
 
 
 def sample_transition_pairs(
-    steps: list[int], grok_step: int, config: EmbeddingPairCollectionConfig, seed: int
+    steps: list[int], threshold_step: int, config: EmbeddingPairCollectionConfig, seed: int
 ) -> list[tuple[int, int, str]]:
     rng = random.Random(seed)
-    before = [index for index, step in enumerate(steps) if step < grok_step]
-    after = [index for index, step in enumerate(steps) if step >= grok_step]
+    before = [index for index, step in enumerate(steps) if step < threshold_step]
+    after = [index for index, step in enumerate(steps) if step >= threshold_step]
     if len(before) < 2 or len(after) < 2:
-        raise ValueError("Not enough checkpoints on both sides of grokking")
+        raise ValueError("Not enough checkpoints on both sides of the generalization threshold")
     requested = {
         "crossing": config.crossing_pairs,
         "before": config.before_pairs,
@@ -81,21 +81,21 @@ def sample_transition_pairs(
         kind = rng.choice(deficits)
         if kind == "crossing":
             start = _weighted_choice(
-                before, steps, grok_step, config.phase_temperature_steps, rng
+                before, steps, threshold_step, config.phase_temperature_steps, rng
             )
             end = _weighted_choice(
-                after, steps, grok_step, config.phase_temperature_steps, rng
+                after, steps, threshold_step, config.phase_temperature_steps, rng
             )
         else:
             pool = before if kind == "before" else after
             start = _weighted_choice(
-                pool[:-1], steps, grok_step, config.phase_temperature_steps, rng
+                pool[:-1], steps, threshold_step, config.phase_temperature_steps, rng
             )
             later = [candidate for candidate in pool if candidate > start]
             if not later:
                 continue
             end = _weighted_choice(
-                later, steps, grok_step, config.phase_temperature_steps, rng
+                later, steps, threshold_step, config.phase_temperature_steps, rng
             )
         if start >= end or (start, end) in seen:
             continue
@@ -126,17 +126,17 @@ def sample_uniform_pairs(
 def _write_embedding_pair_shard(
     output_file: Path,
     seed: int,
-    grok_step: int,
+    threshold_step: int,
     memorization_step: int | None,
     snapshots: list[tuple[int, torch.Tensor, float, float, float, float]],
-    grok_config: GrokConfig,
+    task_config: TaskConfig,
     pair_config: EmbeddingPairCollectionConfig,
     wall_seconds: float,
 ) -> dict:
     steps = [snapshot[0] for snapshot in snapshots]
     if pair_config.sampling_strategy == "phase_focused":
         sampled = sample_transition_pairs(
-            steps, grok_step, pair_config, seed + 9_000_000
+            steps, threshold_step, pair_config, seed + 9_000_000
         )
     elif pair_config.sampling_strategy == "uniform_within_run":
         sampled = sample_uniform_pairs(steps, pair_config, seed + 9_000_000)
@@ -155,14 +155,14 @@ def _write_embedding_pair_shard(
         "format_version": 5 if pair_config.include_checkpoint_metrics else 4,
         "scope": "token_embedding.weight",
         "seed": seed,
-        "grok_step": grok_step,
+        "threshold_step": threshold_step,
         "memorization_step": memorization_step,
         "steps": kept_steps,
         "embeddings": embeddings,
         "pair_indices": pair_indices,
         "pair_types": pair_types,
         "embedding_shape": list(embeddings.shape[1:]),
-        "grok_config": grok_config.to_dict(),
+        "task_config": task_config.to_dict(),
         "pair_collection_config": asdict(pair_config),
     }
     if pair_config.include_checkpoint_metrics:
@@ -183,7 +183,7 @@ def _write_embedding_pair_shard(
     torch.save(payload, output_file)
     return {
         "seed": seed,
-        "grok_step": grok_step,
+        "threshold_step": threshold_step,
         "memorization_step": memorization_step,
         "pairs": len(sampled),
         "unique_checkpoints": len(used),
@@ -199,26 +199,26 @@ def _write_embedding_pair_shard(
 
 
 def collect_one_embedding_pair_shard(
-    grok_config: GrokConfig,
+    task_config: TaskConfig,
     pair_config: EmbeddingPairCollectionConfig,
     seed: int,
     output_file: Path,
     device: str = "cuda",
 ) -> dict | None:
     seed_everything(seed)
-    data = make_modular_addition(grok_config, split_seed=seed)
+    data = make_modular_addition(task_config, split_seed=seed)
     train_x, train_y = data.train_x.to(device), data.train_y.to(device)
     val_x, val_y = data.val_x.to(device), data.val_y.to(device)
-    model = GrokTransformer(grok_config).to(device)
+    model = TaskTransformer(task_config).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(),
-        lr=grok_config.learning_rate,
-        weight_decay=grok_config.weight_decay,
+        lr=task_config.learning_rate,
+        weight_decay=task_config.weight_decay,
     )
-    detection_lag = grok_config.log_every * (grok_config.grok_patience_logs - 1)
+    detection_lag = task_config.log_every * (task_config.threshold_patience_logs - 1)
     rolling_count = (
         math.ceil(
-            (pair_config.pre_grok_steps + detection_lag) / pair_config.snapshot_every
+            (pair_config.pre_threshold_steps + detection_lag) / pair_config.snapshot_every
         )
         + 4
     )
@@ -227,8 +227,8 @@ def collect_one_embedding_pair_shard(
     )
     uniform_snapshots: list[tuple[int, torch.Tensor, float, float, float, float]] = []
     retained: list[tuple[int, torch.Tensor, float, float, float, float]] | None = None
-    grok_candidates: list[int] = []
-    grok_step = None
+    threshold_candidates: list[int] = []
+    threshold_step = None
     memorization_step = None
     started = time.perf_counter()
     if pair_config.include_checkpoint_metrics:
@@ -252,14 +252,14 @@ def collect_one_embedding_pair_shard(
     else:
         rolling.append(initial_snapshot)
 
-    for step in range(1, grok_config.max_steps + 1):
+    for step in range(1, task_config.max_steps + 1):
         model.train()
         optimizer.zero_grad(set_to_none=True)
         loss = F.cross_entropy(model(train_x), train_y)
         loss.backward()
         optimizer.step()
         snapshot_due = step % pair_config.snapshot_every == 0
-        log_due = step == 1 or step % grok_config.log_every == 0
+        log_due = step == 1 or step % task_config.log_every == 0
         metrics_due = log_due or (
             pair_config.include_checkpoint_metrics and snapshot_due
         )
@@ -286,20 +286,20 @@ def collect_one_embedding_pair_shard(
         if log_due:
             if memorization_step is None and train_acc >= 0.99:
                 memorization_step = step
-            if train_acc >= 0.99 and val_acc >= grok_config.grok_accuracy:
-                grok_candidates.append(step)
+            if train_acc >= 0.99 and val_acc >= task_config.threshold_accuracy:
+                threshold_candidates.append(step)
                 if (
-                    len(grok_candidates) >= grok_config.grok_patience_logs
-                    and grok_step is None
+                    len(threshold_candidates) >= task_config.threshold_patience_logs
+                    and threshold_step is None
                 ):
-                    grok_step = grok_candidates[-grok_config.grok_patience_logs]
+                    threshold_step = threshold_candidates[-task_config.threshold_patience_logs]
                     if pair_config.sampling_strategy == "phase_focused":
                         retained = list(rolling)
             else:
-                grok_candidates.clear()
-        if grok_step is not None and step >= grok_step + pair_config.post_grok_steps:
+                threshold_candidates.clear()
+        if threshold_step is not None and step >= threshold_step + pair_config.post_threshold_steps:
             break
-    if grok_step is None:
+    if threshold_step is None:
         return None
     if pair_config.sampling_strategy == "uniform_within_run":
         retained = uniform_snapshots
@@ -307,8 +307,8 @@ def collect_one_embedding_pair_shard(
         return None
     if pair_config.sampling_strategy == "phase_focused":
         low, high = (
-            grok_step - pair_config.pre_grok_steps,
-            grok_step + pair_config.post_grok_steps,
+            threshold_step - pair_config.pre_threshold_steps,
+            threshold_step + pair_config.post_threshold_steps,
         )
         retained = [snapshot for snapshot in retained if low <= snapshot[0] <= high]
     if retained[-1][0] < step:
@@ -328,17 +328,17 @@ def collect_one_embedding_pair_shard(
     return _write_embedding_pair_shard(
         output_file,
         seed,
-        grok_step,
+        threshold_step,
         memorization_step,
         retained,
-        grok_config,
+        task_config,
         pair_config,
         time.perf_counter() - started,
     )
 
 
 def collect_embedding_pair_dataset(
-    grok_config: GrokConfig,
+    task_config: TaskConfig,
     pair_config: EmbeddingPairCollectionConfig,
     dataset_dir: Path,
     device: str = "cuda",
@@ -351,7 +351,7 @@ def collect_embedding_pair_dataset(
         manifest = {
             "format_version": 5 if pair_config.include_checkpoint_metrics else 4,
             "scope": "token_embedding.weight",
-            "grok_config": grok_config.to_dict(),
+            "task_config": task_config.to_dict(),
             "pair_collection_config": asdict(pair_config),
             "runs": [],
         }
@@ -366,11 +366,11 @@ def collect_embedding_pair_dataset(
             continue
         output_file = dataset_dir / f"embedding_pairs_seed_{seed:04d}.pt"
         row = collect_one_embedding_pair_shard(
-            grok_config, pair_config, seed, output_file, device
+            task_config, pair_config, seed, output_file, device
         )
         if row is None:
             failures += 1
-            print(f"seed={seed} did not grok; discarded", flush=True)
+            print(f"seed={seed} did not reach the generalization threshold; discarded", flush=True)
         else:
             manifest["runs"].append(row)
             total_bytes += row["bytes"]
@@ -379,7 +379,7 @@ def collect_embedding_pair_dataset(
             manifest["failed_runs"] = failures
             manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
             print(
-                f"kept={len(manifest['runs'])} seed={seed} grok={row['grok_step']} "
+                f"kept={len(manifest['runs'])} seed={seed} threshold={row['threshold_step']} "
                 f"pairs={row['pairs']} unique={row['unique_checkpoints']} "
                 f"dataset_gib={manifest['total_gib']:.3f}",
                 flush=True,

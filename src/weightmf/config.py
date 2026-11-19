@@ -2,7 +2,7 @@ from dataclasses import asdict, dataclass
 
 
 @dataclass(frozen=True)
-class GrokConfig:
+class TaskConfig:
     modulus: int = 113
     train_fraction: float = 0.30
     seq_len: int = 3
@@ -15,8 +15,8 @@ class GrokConfig:
     log_every: int = 100
     checkpoint_every: int = 250
     stabilization_steps: int = 1_500
-    grok_accuracy: float = 0.95
-    grok_patience_logs: int = 3
+    threshold_accuracy: float = 0.95
+    threshold_patience_logs: int = 3
 
     @property
     def vocab_size(self) -> int:

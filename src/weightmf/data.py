@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import torch
 
-from .config import GrokConfig
+from .config import TaskConfig
 
 
 @dataclass
@@ -13,7 +13,7 @@ class ModularAdditionData:
     val_y: torch.Tensor
 
 
-def make_modular_addition(config: GrokConfig, split_seed: int) -> ModularAdditionData:
+def make_modular_addition(config: TaskConfig, split_seed: int) -> ModularAdditionData:
     """Create every ordered pair (a,b), then make a deterministic 30/70 split."""
     p = config.modulus
     a = torch.arange(p).repeat_interleave(p)

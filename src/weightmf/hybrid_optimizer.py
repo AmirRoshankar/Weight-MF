@@ -13,10 +13,10 @@ import pandas as pd
 import torch
 from torch.nn import functional as F
 
-from .config import GrokConfig
+from .config import TaskConfig
 from .data import make_modular_addition
 from .embedding_meanflow import TokenEmbeddingMeanFlow
-from .model import GrokTransformer
+from .model import TaskTransformer
 from .train import evaluate, seed_everything
 
 
@@ -120,20 +120,20 @@ def train_hybrid_run(
     normalizer_scale: float,
     protocol: HybridProtocol,
     seed: int,
-    config: GrokConfig,
+    config: TaskConfig,
     device: str = "cuda",
 ) -> tuple[pd.DataFrame, dict]:
     seed_everything(seed)
     data = make_modular_addition(config, split_seed=seed)
     train_x, train_y = data.train_x.to(device), data.train_y.to(device)
     val_x, val_y = data.val_x.to(device), data.val_y.to(device)
-    model = GrokTransformer(config).to(device)
+    model = TaskTransformer(config).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay
     )
     rows, intervention_rows = [], []
-    memorization_step, grok_step = None, None
-    grok_candidates: list[int] = []
+    memorization_step, threshold_step = None, None
+    threshold_candidates: list[int] = []
     flow_inference_seconds = 0.0
     started = time.perf_counter()
 
@@ -199,16 +199,16 @@ def train_hybrid_run(
             )
             if memorization_step is None and train_acc >= 0.99:
                 memorization_step = step
-            if train_acc >= 0.99 and val_acc >= config.grok_accuracy:
-                grok_candidates.append(step)
+            if train_acc >= 0.99 and val_acc >= config.threshold_accuracy:
+                threshold_candidates.append(step)
                 if (
-                    len(grok_candidates) >= config.grok_patience_logs
-                    and grok_step is None
+                    len(threshold_candidates) >= config.threshold_patience_logs
+                    and threshold_step is None
                 ):
-                    grok_step = grok_candidates[-config.grok_patience_logs]
+                    threshold_step = threshold_candidates[-config.threshold_patience_logs]
             else:
-                grok_candidates.clear()
-        if grok_step is not None and step >= grok_step + config.stabilization_steps:
+                threshold_candidates.clear()
+        if threshold_step is not None and step >= threshold_step + config.stabilization_steps:
             break
 
     final = rows[-1]
@@ -217,7 +217,7 @@ def train_hybrid_run(
         "protocol_config": asdict(protocol),
         "seed": seed,
         "memorization_step": memorization_step,
-        "grok_step": grok_step,
+        "threshold_step": threshold_step,
         "final_step": final["step"],
         "final_train_acc": final["train_acc"],
         "final_val_acc": final["val_acc"],
@@ -281,7 +281,7 @@ def run_hybrid_suite(
     seeds_override: list[int] | None = None,
 ) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
-    config = GrokConfig(max_steps=20_000, stabilization_steps=1_000)
+    config = TaskConfig(max_steps=20_000, stabilization_steps=1_000)
     default_protocols = [
         HybridProtocol("optimizer_only"),
         HybridProtocol(
@@ -364,16 +364,16 @@ def run_hybrid_suite(
             )
             print(
                 f"hybrid protocol={protocol.name} seed={seed} "
-                f"grok={payload['summary']['grok_step']} val={payload['summary']['final_val_acc']:.4f}",
+                f"threshold={payload['summary']['threshold_step']} val={payload['summary']['final_val_acc']:.4f}",
                 flush=True,
             )
     metrics_frame = pd.concat(all_metrics, ignore_index=True)
     summary_frame = pd.DataFrame(summaries)
     aggregate = summary_frame.groupby("protocol", as_index=False).agg(
         trials=("seed", "count"),
-        grokked=("grok_step", lambda values: int(values.notna().sum())),
-        mean_grok_step=("grok_step", "mean"),
-        std_grok_step=("grok_step", "std"),
+        reached_threshold=("threshold_step", lambda values: int(values.notna().sum())),
+        mean_threshold_step=("threshold_step", "mean"),
+        std_threshold_step=("threshold_step", "std"),
         mean_final_val_acc=("final_val_acc", "mean"),
         mean_wall_seconds=("wall_seconds", "mean"),
         mean_flow_inference_seconds=("flow_inference_seconds", "mean"),
@@ -389,7 +389,7 @@ def run_hybrid_suite(
     aggregate.to_csv(output_dir / "aggregate_summary.csv", index=False)
     _plot_suite(metrics_frame, output_dir / "hybrid_accuracy_curves.png")
     result = {
-        "grok_config": config.to_dict(),
+        "task_config": config.to_dict(),
         "seeds": seeds,
         "protocols": [asdict(protocol) for protocol in protocols],
         "weights_saved": False,

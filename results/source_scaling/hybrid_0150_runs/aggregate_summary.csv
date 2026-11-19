@@ -1,3 +1,3 @@
-protocol,trials,grokked,mean_grok_step,std_grok_step,mean_final_val_acc,mean_wall_seconds,mean_flow_inference_seconds,mean_interventions,mean_optimizer_flow_cosine,mean_raw_flow_to_optimizer_norm_ratio
+protocol,trials,reached_threshold,mean_threshold_step,std_threshold_step,mean_final_val_acc,mean_wall_seconds,mean_flow_inference_seconds,mean_interventions,mean_optimizer_flow_cosine,mean_raw_flow_to_optimizer_norm_ratio
 raw_equal_fixed_9000,20,20,5290.0,2444.736558835177,0.9997930467128754,13.00636422499083,0.13417095504701138,58.9,-0.7932333252792391,380.61351157717826
 raw_optimizer10_flow90_fixed_9000,20,20,5305.0,2918.628913863855,0.9986072391271591,13.03667905498296,0.1342277297284454,59.05,-0.8418214862236744,216.99268008678928

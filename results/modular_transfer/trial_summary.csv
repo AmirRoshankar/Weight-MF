@@ -1,4 +1,4 @@
-protocol,task,modulus,seed,grok_step,censored_grok_step,memorization_step,final_val_acc,wall_seconds
+protocol,task,modulus,seed,threshold_step,censored_threshold_step,memorization_step,final_val_acc,wall_seconds
 optimizer_only,addition,97,31000,4700.0,4700,200,1.0,10.745073500089347
 addition_transformer_imf_full_reset,addition,97,31000,2300.0,2300,200,1.0,6.139838400296867
 optimizer_only,addition,97,31001,6300.0,6300,200,0.9996963739395142,13.424847000278533

@@ -14,10 +14,10 @@ import pandas as pd
 import torch
 from torch.nn import functional as F
 
-from .config import GrokConfig
+from .config import TaskConfig
 from .data import make_modular_addition
 from .meanflow_objective import sample_improved_meanflow
-from .model import GrokTransformer
+from .model import TaskTransformer
 from .operation_data import make_binary_operation
 from .train import evaluate, seed_everything
 from .transformer_weight_dataset import TRANSFORMER_WEIGHT_NAMES
@@ -41,7 +41,7 @@ class TransformerIntervention:
     reset_optimizer_moments: bool = False
 
 
-def _current_rows(model: GrokTransformer) -> torch.Tensor:
+def _current_rows(model: TaskTransformer) -> torch.Tensor:
     state = model.state_dict()
     rows = []
     for name in TRANSFORMER_WEIGHT_NAMES:
@@ -74,7 +74,7 @@ def load_transformer_generator(
 def generate_transformer_endpoint(
     generator_model: ConditionalTransformerWeightGenerator,
     artifact: dict,
-    task_model: GrokTransformer,
+    task_model: TaskTransformer,
     current_step: int,
     target_step: int,
     training_loss: float,
@@ -120,7 +120,7 @@ def train_target(
     task: str = "addition",
     modulus: int = 113,
 ) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
-    config = GrokConfig(modulus=modulus, max_steps=20_000, stabilization_steps=1_000)
+    config = TaskConfig(modulus=modulus, max_steps=20_000, stabilization_steps=1_000)
     seed_everything(seed)
     data = (
         make_modular_addition(config, split_seed=seed)
@@ -129,15 +129,15 @@ def train_target(
     )
     train_x, train_y = data.train_x.to(device), data.train_y.to(device)
     val_x, val_y = data.val_x.to(device), data.val_y.to(device)
-    model = GrokTransformer(config).to(device)
+    model = TaskTransformer(config).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay
     )
     parameter_lookup = dict(model.named_parameters())
     metrics = []
     interventions = []
-    grok_candidates = []
-    grok_step = memorization_step = None
+    threshold_candidates = []
+    threshold_step = memorization_step = None
     started = time.perf_counter()
     for step in range(1, config.max_steps + 1):
         model.train()
@@ -199,24 +199,24 @@ def train_target(
             )
             if memorization_step is None and train_acc >= 0.99:
                 memorization_step = step
-            if train_acc >= 0.99 and val_acc >= config.grok_accuracy:
-                grok_candidates.append(step)
+            if train_acc >= 0.99 and val_acc >= config.threshold_accuracy:
+                threshold_candidates.append(step)
                 if (
-                    len(grok_candidates) >= config.grok_patience_logs
-                    and grok_step is None
+                    len(threshold_candidates) >= config.threshold_patience_logs
+                    and threshold_step is None
                 ):
-                    grok_step = grok_candidates[-config.grok_patience_logs]
+                    threshold_step = threshold_candidates[-config.threshold_patience_logs]
             else:
-                grok_candidates.clear()
-        if grok_step is not None and step >= grok_step + config.stabilization_steps:
+                threshold_candidates.clear()
+        if threshold_step is not None and step >= threshold_step + config.stabilization_steps:
             break
     summary = {
         "protocol": protocol.name,
         "task": task,
         "modulus": modulus,
         "seed": seed,
-        "grok_step": grok_step,
-        "censored_grok_step": grok_step if grok_step is not None else config.max_steps,
+        "threshold_step": threshold_step,
+        "censored_threshold_step": threshold_step if threshold_step is not None else config.max_steps,
         "memorization_step": memorization_step,
         "final_val_acc": metrics[-1]["val_acc"],
         "wall_seconds": time.perf_counter() - started,
@@ -285,16 +285,16 @@ def run_transformer_downstream(
             all_metrics.append(metrics)
             summaries.append(summary)
             print(
-                f"transformer downstream {protocol.name} seed={seed} grok={summary['grok_step']}",
+                f"transformer downstream {protocol.name} seed={seed} threshold={summary['threshold_step']}",
                 flush=True,
             )
     metric_frame = pd.concat(all_metrics, ignore_index=True)
     summary_frame = pd.DataFrame(summaries)
     aggregate = summary_frame.groupby("protocol", as_index=False).agg(
         trials=("seed", "count"),
-        grokked=("grok_step", lambda values: int(values.notna().sum())),
-        restricted_mean_grok_step=("censored_grok_step", "mean"),
-        std_censored_grok_step=("censored_grok_step", "std"),
+        reached_threshold=("threshold_step", lambda values: int(values.notna().sum())),
+        restricted_mean_threshold_step=("censored_threshold_step", "mean"),
+        std_censored_threshold_step=("censored_threshold_step", "std"),
         mean_final_val_acc=("final_val_acc", "mean"),
     )
     metric_frame.to_csv(output_dir / "training_metrics.csv", index=False)
@@ -396,7 +396,7 @@ def run_transformer_transfer_suite(
                             "current_modulus": modulus,
                             "current_protocol": protocol.name,
                             "current_seed": seed,
-                            "latest_grok_step": summary["grok_step"],
+                            "latest_threshold_step": summary["threshold_step"],
                         },
                         indent=2,
                     ),
@@ -404,7 +404,7 @@ def run_transformer_transfer_suite(
                 )
                 print(
                     f"transfer p={modulus} task={task} protocol={protocol.name} "
-                    f"seed={seed} grok={summary['grok_step']}",
+                    f"seed={seed} threshold={summary['threshold_step']}",
                     flush=True,
                 )
         task_metrics = pd.concat(
@@ -428,10 +428,10 @@ def run_transformer_transfer_suite(
         ["modulus", "task", "protocol"], as_index=False
     ).agg(
         trials=("seed", "count"),
-        grokked=("grok_step", lambda values: int(values.notna().sum())),
-        restricted_mean_grok_step=("censored_grok_step", "mean"),
-        std_censored_grok_step=("censored_grok_step", "std"),
-        median_censored_grok_step=("censored_grok_step", "median"),
+        reached_threshold=("threshold_step", lambda values: int(values.notna().sum())),
+        restricted_mean_threshold_step=("censored_threshold_step", "mean"),
+        std_censored_threshold_step=("censored_threshold_step", "std"),
+        median_censored_threshold_step=("censored_threshold_step", "median"),
         mean_final_val_acc=("final_val_acc", "mean"),
     )
     metric_frame.to_csv(output_dir / "training_metrics.csv", index=False)
@@ -450,14 +450,14 @@ def run_transformer_transfer_suite(
                 & (aggregate.modulus == modulus)
                 & (aggregate.protocol == protocol.name)
             ]
-            values.append(float(row.restricted_mean_grok_step.iloc[0]))
+            values.append(float(row.restricted_mean_threshold_step.iloc[0]))
         axis.bar([value + offset for value in x], values, width, label=protocol.name)
     axis.set_xticks(list(x), labels)
-    axis.set_ylabel("Restricted mean grok step (20k censoring)")
+    axis.set_ylabel("Restricted mean threshold step (20k censoring)")
     axis.set_title("Addition-trained transformer iMF: cross-task transfer")
     axis.grid(axis="y", alpha=0.25)
     axis.legend()
-    figure.savefig(output_dir / "cross_task_time_to_grok.png", dpi=170)
+    figure.savefig(output_dir / "cross_task_time_to_threshold.png", dpi=170)
     plt.close(figure)
 
     config = {

@@ -43,21 +43,21 @@ def main():
         invoke("scripts/plot_results.py", [])
         return
     if args.experiment.startswith("collect-"):
-        from grokflow.config import GrokConfig
-        from grokflow.embedding_pair_dataset import (
+        from weightmf.config import TaskConfig
+        from weightmf.embedding_pair_dataset import (
             EmbeddingPairCollectionConfig,
             collect_embedding_pair_dataset,
         )
 
         if args.experiment == "collect-embedding":
             collect_embedding_pair_dataset(
-                GrokConfig(),
+                TaskConfig(),
                 EmbeddingPairCollectionConfig(max_runs=1102),
                 args.dataset or ROOT / "data/embedding",
                 args.device,
             )
             return
-        from grokflow.transformer_weight_dataset import (
+        from weightmf.transformer_weight_dataset import (
             TransformerWeightCollectionConfig,
             collect_one_transformer_weight_shard,
             canonical_row_layout,
@@ -84,7 +84,7 @@ def main():
             if seed in completed:
                 continue
             shard = collect_one_transformer_weight_shard(
-                GrokConfig(),
+                TaskConfig(),
                 TransformerWeightCollectionConfig(),
                 seed,
                 dataset / f"transformer_pairs_seed_{seed}.pt",
@@ -92,7 +92,7 @@ def main():
             )
             if shard is None:
                 raise RuntimeError(
-                    f"Seed {seed} did not grok; do not substitute another source seed silently."
+                    f"Seed {seed} did not reach the generalization threshold; do not substitute another source seed silently."
                 )
             manifest["runs"].append(shard)
             manifest_file.write_text(json.dumps(manifest, indent=2))

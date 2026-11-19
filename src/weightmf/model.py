@@ -4,7 +4,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from .config import GrokConfig
+from .config import TaskConfig
 
 
 class MultiHeadSelfAttention(nn.Module):
@@ -38,10 +38,10 @@ class MultiHeadSelfAttention(nn.Module):
         return self.W_O(attended)
 
 
-class GrokTransformer(nn.Module):
+class TaskTransformer(nn.Module):
     """The one-layer, no-LayerNorm transformer from Nanda et al. (2023)."""
 
-    def __init__(self, config: GrokConfig):
+    def __init__(self, config: TaskConfig):
         super().__init__()
         self.config = config
         self.token_embedding = nn.Embedding(config.vocab_size, config.d_model)

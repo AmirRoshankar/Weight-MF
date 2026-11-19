@@ -1,4 +1,4 @@
-source_runs,protocol,mean_grok_step,std_grok_step,successes,trials
+source_runs,protocol,mean_threshold_step,std_threshold_step,successes,trials
 50,optimizer_only,7255.0,3818.442090696152,19,20
 50,raw_equal_fixed_9000,7015.0,3781.154794364728,19,20
 50,raw_optimizer10_flow90_fixed_9000,6985.0,3780.7371879318093,19,20

@@ -4,11 +4,11 @@ import torch
 import torch.nn.functional as F
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from grokflow.config import GrokConfig
-from grokflow.data import make_modular_addition
-from grokflow.model import GrokTransformer
-from grokflow.train import seed_everything, evaluate
-from grokflow.transformer_weight_dataset import (
+from weightmf.config import TaskConfig
+from weightmf.data import make_modular_addition
+from weightmf.model import TaskTransformer
+from weightmf.train import seed_everything, evaluate
+from weightmf.transformer_weight_dataset import (
     transformer_weight_snapshot,
     TRANSFORMER_WEIGHT_NAMES,
     canonical_row_layout,
@@ -51,7 +51,7 @@ def main():
         else {"runs": []}
     )
     prior = {x["seed"]: x for x in existing["runs"]}
-    cfg = GrokConfig()
+    cfg = TaskConfig()
     results = []
     for idx, seed in enumerate(seeds):
         path = OUT / f"transformer_pairs_seed_{seed}.pt"
@@ -73,7 +73,7 @@ def main():
         )
         steps = old["steps"]
         gaps = [int(steps[j] - steps[i]) for i, j in old["pair_indices"].tolist()]
-        end = min(cfg.max_steps, int(old["grok_step"]) + 2000)
+        end = min(cfg.max_steps, int(old["threshold_step"]) + 2000)
         rng = random.Random(46000000 + seed)
         pairs = []
         for k, gap in enumerate(gaps):
@@ -88,7 +88,7 @@ def main():
         data = make_modular_addition(cfg, split_seed=seed)
         tx, ty = data.train_x.cuda(), data.train_y.cuda()
         vx, vy = data.val_x.cuda(), data.val_y.cuda()
-        model = GrokTransformer(cfg).cuda()
+        model = TaskTransformer(cfg).cuda()
         opt = torch.optim.AdamW(
             model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay
         )
@@ -129,7 +129,7 @@ def main():
             format_version=1,
             scope="transformer_block_weights",
             seed=seed,
-            grok_step=old["grok_step"],
+            threshold_step=old["threshold_step"],
             memorization_step=old["memorization_step"],
             steps=torch.tensor(keep, dtype=torch.int32),
             weights={
@@ -146,7 +146,7 @@ def main():
             train_accuracies=torch.tensor([captures[s][2] for s in keep]),
             validation_losses=torch.tensor([captures[s][3] for s in keep]),
             validation_accuracies=torch.tensor([captures[s][4] for s in keep]),
-            grok_config=cfg.to_dict(),
+            task_config=cfg.to_dict(),
             sampling_policy="one start per feasible-time decile, original per-run gaps",
             source_shard=shards[seed]["file"],
             wall_seconds=time.perf_counter() - started,

@@ -2,12 +2,12 @@ import random
 import numpy as np
 import torch
 from torch.nn import functional as F
-from .model import GrokTransformer
+from .model import TaskTransformer
 
 
 @torch.inference_mode()
 def evaluate(
-    model: GrokTransformer, x: torch.Tensor, y: torch.Tensor
+    model: TaskTransformer, x: torch.Tensor, y: torch.Tensor
 ) -> tuple[float, float]:
     logits = model(x)
     return float(F.cross_entropy(logits, y)), float(

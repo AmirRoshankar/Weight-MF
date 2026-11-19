@@ -4,7 +4,7 @@ import math
 
 import torch
 
-from .config import GrokConfig
+from .config import TaskConfig
 from .data import ModularAdditionData
 
 
@@ -59,9 +59,9 @@ def _operation_labels(
 
 
 def make_binary_operation(
-    config: GrokConfig, split_seed: int, operation: str
+    config: TaskConfig, split_seed: int, operation: str
 ) -> ModularAdditionData:
-    """Build a same-shape binary-operation task for cross-task grokking tests."""
+    """Build a same-shape binary-operation task for cross-task optimization tests."""
     if operation not in SUPPORTED_OPERATIONS:
         raise ValueError(f"operation must be one of {SUPPORTED_OPERATIONS}")
     p = config.modulus

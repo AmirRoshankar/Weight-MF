@@ -42,7 +42,7 @@ def modular():
             float(
                 a[
                     (a.task == t) & (a.modulus == p) & (a.protocol == proto)
-                ].restricted_mean_grok_step.iloc[0]
+                ].restricted_mean_threshold_step.iloc[0]
             )
             for t, p in tasks
         ]
@@ -55,7 +55,7 @@ def modular():
         )
     ax.set_xticks(range(len(tasks)), labels, fontsize=8)
     ax.set_ylabel("Mean threshold step (20,000-step censoring)")
-    finish(fig, ax, R / "figures/modular_transfer/cross_task_time_to_grok.png")
+    finish(fig, ax, R / "figures/modular_transfer/cross_task_time_to_threshold.png")
     for t, p in tasks:
         fig, ax = plt.subplots(figsize=(8, 4))
         for proto, label in [
@@ -158,15 +158,15 @@ def main():
     for size in (50, 150, 500):
         x = pd.read_csv(root / f"hybrid_{size:04d}_runs/trial_summary.csv")
         x["source_runs"] = size
-        x["capped_step"] = x.grok_step.fillna(20000)
+        x["capped_step"] = x.threshold_step.fillna(20000)
         frames.append(x)
     d = pd.concat(frames)
     table = (
         d.groupby(["source_runs", "protocol"])
         .agg(
-            mean_grok_step=("capped_step", "mean"),
-            std_grok_step=("capped_step", "std"),
-            successes=("grok_step", "count"),
+            mean_threshold_step=("capped_step", "mean"),
+            std_threshold_step=("capped_step", "std"),
+            successes=("threshold_step", "count"),
             trials=("seed", "count"),
         )
         .reset_index()
@@ -178,8 +178,8 @@ def main():
         ("raw_equal_fixed_9000", "50% optimizer / 50% flow"),
     ]:
         q = table[table.protocol == proto].sort_values("source_runs")
-        ax.plot(q.source_runs, q.mean_grok_step, "o-", label=label)
-    baseline = float(table[table.protocol == "optimizer_only"].mean_grok_step.iloc[0])
+        ax.plot(q.source_runs, q.mean_threshold_step, "o-", label=label)
+    baseline = float(table[table.protocol == "optimizer_only"].mean_threshold_step.iloc[0])
     ax.axhline(baseline, color="gray", linestyle="--", label="AdamW reference")
     ax.set(
         xlabel="Source runs",

@@ -10,12 +10,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from grokflow.embedding_velocity_investigation import (
+from weightmf.embedding_velocity_investigation import (
     VelocityInvestigationConfig,
     make_run_split,
     run_velocity_investigation,
 )
-from grokflow.hybrid_grokking import HybridProtocol, run_hybrid_suite
+from weightmf.hybrid_optimizer import HybridProtocol, run_hybrid_suite
 
 
 SOURCE_SIZES = [50, 150, 500]
@@ -49,16 +49,16 @@ def _plot_scaling(frame: pd.DataFrame, output: Path) -> None:
         group = group.sort_values("source_runs")
         axes[1].errorbar(
             group["source_runs"],
-            group["mean_grok_step"],
-            yerr=group["std_grok_step"],
+            group["mean_threshold_step"],
+            yerr=group["std_threshold_step"],
             marker="o",
             capsize=4,
             label=protocol,
         )
     axes[1].set(
         xlabel="Checkpoint source runs",
-        ylabel="Mean grok step Â± sample SD",
-        title="Downstream grokking acceleration",
+        ylabel="Mean threshold step +/- sample SD",
+        title="Cross-task optimization acceleration",
     )
     axes[1].grid(alpha=0.25)
     axes[1].legend()
@@ -71,7 +71,7 @@ def main() -> None:
     parser.add_argument(
         "--dataset-dir",
         type=Path,
-        default=Path("../../work/grokking_embedding_pairs_v4"),
+        default=Path("data/embedding"),
     )
     parser.add_argument(
         "--output-root",
@@ -168,8 +168,8 @@ def main() -> None:
                     "source_runs": source_runs,
                     "protocol": row["protocol"],
                     "downstream_trials": int(row["trials"]),
-                    "mean_grok_step": row["mean_grok_step"],
-                    "std_grok_step": row["std_grok_step"],
+                    "mean_threshold_step": row["mean_threshold_step"],
+                    "std_threshold_step": row["std_threshold_step"],
                     "mean_target_wall_seconds": row["mean_wall_seconds"],
                     "mean_flow_inference_seconds": row.get(
                         "mean_flow_inference_seconds"
@@ -193,10 +193,10 @@ def main() -> None:
     baseline = frame[frame["protocol"] == "optimizer_only"].iloc[0]
     assisted_frame = frame[frame["protocol"] != "optimizer_only"].copy()
     assisted_frame["step_reduction_vs_optimizer"] = (
-        baseline["mean_grok_step"] - assisted_frame["mean_grok_step"]
+        baseline["mean_threshold_step"] - assisted_frame["mean_threshold_step"]
     )
     assisted_frame["percent_reduction_vs_optimizer"] = (
-        100 * assisted_frame["step_reduction_vs_optimizer"] / baseline["mean_grok_step"]
+        100 * assisted_frame["step_reduction_vs_optimizer"] / baseline["mean_threshold_step"]
     )
     assisted_frame["target_wall_seconds_saved"] = (
         baseline["mean_target_wall_seconds"]

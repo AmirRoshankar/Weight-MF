@@ -4,11 +4,11 @@ import torch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from grokflow.transformer_weight_meanflow import (
+from weightmf.transformer_weight_meanflow import (
     ConditionalTransformerWeightGenerator,
     TransformerWeightGeneratorConfig,
 )
-from grokflow.meanflow_objective import improved_meanflow_loss, sample_improved_meanflow
+from weightmf.meanflow_objective import improved_meanflow_loss, sample_improved_meanflow
 
 
 class GeneratorTests(unittest.TestCase):

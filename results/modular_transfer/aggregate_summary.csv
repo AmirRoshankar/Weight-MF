@@ -1,4 +1,4 @@
-modulus,task,protocol,trials,grokked,restricted_mean_grok_step,std_censored_grok_step,median_censored_grok_step,mean_final_val_acc
+modulus,task,protocol,trials,reached_threshold,restricted_mean_threshold_step,std_censored_threshold_step,median_censored_threshold_step,mean_final_val_acc
 97,addition,addition_transformer_imf_full_reset,20,20,2415.0,774.1038961956356,2300.0,0.9995901018381119
 97,addition,optimizer_only,20,20,7045.0,3081.092594997328,6300.0,0.9992257505655289
 97,bitwise_xor,addition_transformer_imf_full_reset,20,20,2850.0,1107.6290467765632,2500.0,0.9932973980903625

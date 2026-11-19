@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from grokflow.transformer_weight_meanflow_training import (
+from weightmf.transformer_weight_meanflow_training import (
     TransformerWeightTrainingConfig,
     train_transformer_weight_meanflow,
 )

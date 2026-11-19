@@ -1,11 +1,11 @@
 # Weight-MF
-## Learning transferable weight dynamics from modular addition
+## Generative optimization through cross-task weight transfer
 
-We study a one-shot generator that can accelerate the optimization process for a given block of weights. Trained with improved MeanFlow on modular-addition checkpoint pairs, the frozen generator proposes compatible transformer-block weights for other tasks. The experiments cover cross-operation transfer, compositional arithmetic, source-data budgets and causal controls.
+Weight-MF studies a generative optimizer that transfers learned weight updates across tasks. A one-shot generator trained with Improved MeanFlow on modular-addition checkpoint pairs proposes compatible transformer-block weights for new tasks. These proposals augment ordinary AdamW optimization through single or repeated block-level interventions. We evaluate cross-task transfer, compositional arithmetic, source-data budgets and causal controls.
 
 ## Method
 
-Each generator call predicts an endpoint in one network evaluation. It can be used once or applied periodically during optimizer training. For a selected block W, the frozen generator predicts endpoint P from its weights, source-step prompts, training-subset loss and seeded noise. The intervention is W_new = W + alpha(P - W), followed by ordinary AdamW training. Embeddings learn through the target optimizer. Compatible matrix shapes permit transfer between blocks whose activation, normalization and residual computation differ.
+The generative optimizer learns from source-task training trajectories and remains frozen during target-task training. Each generator call predicts an endpoint in one network evaluation. It can be used once or applied periodically during optimizer training. For a selected block W, the frozen generator predicts endpoint P from its weights, source-step prompts, training-subset loss and seeded noise. The intervention is W_new = W + alpha(P - W), followed by ordinary AdamW training. Embeddings learn through the target optimizer. Compatible matrix shapes permit transfer between blocks whose activation, normalization and residual computation differ.
 
 ```mermaid
 flowchart LR
@@ -34,9 +34,9 @@ An addition-mod-113-trained generator replaces six target attention/MLP matrices
 
 Neither the original optimizer-only models nor the generator-assisted models solve the symmetric-quadratic task to the generalization criterion within the 20,000-step budget. Their final accuracies can improve without reaching that criterion.
 
-Threshold means replace failures with the 20,000-step censoring limit; they combine learning speed and success probability. They are not means conditional on successful convergence.
+The generalization threshold requires at least 99% training accuracy and 95% validation accuracy for three consecutive evaluations, logged every 100 updates after the initial evaluation. Threshold means replace failures with the 20,000-step censoring limit; they combine learning speed and success probability. They are not means conditional on successful convergence.
 
-![Cross-task transfer](figures/modular_transfer/cross_task_time_to_grok.png)
+![Cross-task transfer](figures/modular_transfer/cross_task_time_to_threshold.png)
 
 ### Individual operation learning curves
 ![Multiplication mod 113](figures/modular_transfer/p113_multiplication_accuracy.png)
@@ -74,7 +74,7 @@ An earlier embedding-only source-count study compared 50/150/500 runs. The 500-s
 
 ## Scope and next steps
 
-The results support reusable block-weight interventions in controlled arithmetic. Fixed-data seed replication, causal controls and exact trajectory replay strengthen this finding. Source and target computations differ despite shared matrix dimensions; compositional accuracy gains alone do not demonstrate target grokking. Some tasks, seeds and settings decline.
+The results support reusable block-weight interventions in controlled arithmetic. Fixed-data seed replication, causal controls and exact trajectory replay strengthen this finding. Source and target computations differ despite shared matrix dimensions; the compositional results measure fixed-budget accuracy, while the modular experiments measure time to a sustained generalization threshold. The generator augments AdamW; a standalone general-purpose optimizer has not been established. Some tasks, seeds and settings decline.
 
 1. **Investigate norm-matched controls first.** Explain the deterioration under matched random directions and evaluate stable update-norm-matched, weight-norm-preserving and direct-donor controls. This is necessary to distinguish useful predicted directions from the effects of perturbation, shrinkage and reset.
 2. **Develop and test a flow-map formulation.** Treat consistent mappings between checkpoints and compositions of shorter mappings as a future research direction. The current evidence concerns a one-shot endpoint generator; it does not establish a trajectory-consistent flow map.
@@ -94,7 +94,7 @@ The README is the research narrative. This file specifies the executable experim
 
 ### Layout
 
-- src/grokflow/: source transformer, checkpoint datasets, block/embedding generators and modular-task evaluation.
+- src/weightmf/: source transformer, checkpoint datasets, block/embedding generators and modular-task evaluation.
 - experiments/: three command-line experiment implementations; curriculum/ contains the five-block architecture and the paired curriculum treatments.
 - scripts/run.py: public entry point. New runs go to runs/, never to the recorded results.
 - results/: tabular measurements, per-seed stage curves, and source/generator configurations.
@@ -124,7 +124,7 @@ This regenerates every README figure from the retained CSVs, including every ind
     python scripts/run.py collect-source
     python scripts/run.py train-generator --source transition
 
-Collection replays source seeds 20000 through 20601 and keeps ten transition-focused pairs per successful trajectory. The generator uses the original 500/51/51 whole-run split and 10,000 training updates. If a specified source seed fails to grok, collection stops instead of substituting a new seed. Outputs are data/source_transition and artifacts/transition.
+Collection replays source seeds 20000 through 20601 and keeps ten transition-focused pairs per successful trajectory. The generator uses the original 500/51/51 whole-run split and 10,000 training updates. If a specified source seed fails to reach the generalization threshold, collection stops instead of substituting a new seed. Outputs are data/source_transition and artifacts/transition.
 
     python scripts/run.py recollect-source
     python scripts/run.py train-generator --source stratified

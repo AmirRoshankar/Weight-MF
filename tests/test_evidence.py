@@ -34,13 +34,13 @@ class EvidenceTests(unittest.TestCase):
         )
         base = base[base.protocol == "optimizer_only"]
         self.assertEqual(len(base), 20)
-        self.assertEqual(int(base.grok_step.isna().sum()), 1)
-        self.assertEqual(float(base.grok_step.fillna(20000).mean()), 7255.0)
+        self.assertEqual(int(base.threshold_step.isna().sum()), 1)
+        self.assertEqual(float(base.threshold_step.fillna(20000).mean()), 7255.0)
         flow = pd.read_csv(
             ROOT / "results/source_scaling/hybrid_0500_runs/trial_summary.csv"
         )
         flow = flow[flow.protocol == "raw_optimizer10_flow90_fixed_9000"]
-        self.assertEqual(float(flow.grok_step.fillna(20000).mean()), 3690.0)
+        self.assertEqual(float(flow.threshold_step.fillna(20000).mean()), 3690.0)
 
 
 if __name__ == "__main__":
