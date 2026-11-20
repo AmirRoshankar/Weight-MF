@@ -4,7 +4,7 @@
 
 **Can a model trained on one task's optimization trajectories help another task learn faster?** Weight-MF studies this question with a frozen, one-shot generator of transformer-block weights. Trained with Improved MeanFlow (iMF) on modular-addition checkpoints, the generator proposes weights for new tasks and augments ordinary AdamW training through single or repeated interventions.
 
-The strongest results show transfer across operations and into compositional arithmetic. On modular multiplication, a single addition-trained intervention reduces mean steps to the generalization threshold from **6,740 to 2,020** across 20 paired seeds, approximately **70% fewer optimizer steps**. On a five-block arithmetic curriculum, repeated interventions improve mean final holdout accuracy from **57.18% to 75.17%** across five paired seeds. These measure target-training improvements; overall compute savings require accounting for source collection, generator training and inference.
+The strongest results show transfer across operations and into compositional arithmetic. On modular multiplication, a single addition-trained intervention reduces mean steps to the [generalization criterion](#cross-task-modular-transfer) from **6,740 to 2,020** across 20 paired seeds, approximately **70% fewer optimizer steps**. On a five-block arithmetic curriculum, repeated interventions improve mean final holdout accuracy from **57.18% to 75.17%** across five paired seeds. These measure target-training improvements; overall compute savings require accounting for source collection, generator training and inference.
 
 [Method](#method) · [Cross-task results](#cross-task-modular-transfer) · [Compositional arithmetic](#compositional-arithmetic) · [Controls](#what-explains-the-improvement) · [Source data](#source-coverage-and-inference-horizon) · [Limitations](#limitations-and-next-steps) · [Reproduction](#reproduction)
 
@@ -38,20 +38,7 @@ The generator predicts an endpoint conditioned on nominal training progress. Its
 
 **An addition-trained generator accelerates several new operations without further source pretraining.** The source task is addition modulo 113. Each target uses 20 paired seeds; the treatment replaces the six attention/MLP matrices after optimizer step 500 with a generated endpoint prompted at step 9,000, clears their AdamW states, and resumes training. Target inputs are three categorical tokens representing whole integers and the answer position.
 
-**Table 1. Cross-task generalization.** Lower threshold-step means are better. Successes count runs reaching the criterion within 20,000 updates; each arm has 20 runs.
-
-| Target task | Modulus | AdamW mean steps | Weight-MF mean steps | Successes: AdamW / Weight-MF |
-|---|---:|---:|---:|---:|
-| Addition | 97 | 7,045 | 2,415 | 20 / 20 |
-| Subtraction | 113 | 16,415 | 7,220 | 10 / 18 |
-| Subtraction | 97 | 16,335 | 7,795 | 10 / 18 |
-| Multiplication | 113 | 6,740 | **2,020** | 20 / 20 |
-| Multiplication | 97 | 8,035 | 2,590 | 19 / 20 |
-| Division | 97 | 17,720 | 8,770 | 10 / 18 |
-| Bitwise XOR | 97 | 6,385 | 2,850 | 20 / 20 |
-| Symmetric quadratic | 97 | Not reached | Not reached | **0 of 20 / 0 of 20** |
-
-The generalization threshold requires at least 99% training accuracy and 95% validation accuracy for three consecutive evaluations, logged every 100 updates after the initial evaluation. Means replace failures with the 20,000-step censoring limit, combining learning speed and success probability. They are not means conditional on successful convergence.
+**How to read the plot:** a run reaches the generalization criterion when training accuracy is at least 99% and validation accuracy is at least 95% for three consecutive evaluations, spaced 100 updates apart after the initial evaluation. The plotted value is the mean number of optimizer updates needed to reach that criterion; lower is better. Runs that do not reach it are counted at the 20,000-update limit, so the means reflect both learning speed and failure to converge.
 
 Neither the original optimizer-only models nor the generator-assisted models learn the symmetric-quadratic task to this criterion: both have zero successful runs out of 20. Higher final accuracy in that treatment does not establish a solved task.
 
@@ -91,7 +78,7 @@ The transfer crosses a computational difference despite compatible matrix shapes
 
 **The available controls support a role for the learned weight direction beyond optimizer-state resets.** All treatments below use the same five paired target seeds and final holdout metric. Proposal interventions use strength 0.1 every 500 updates in both stages.
 
-**Table 2. Optimizer-state and displacement controls.** Higher final holdout accuracy is better; gains are percentage points relative to AdamW.
+**Table 1. Optimizer-state and displacement controls.** Higher final holdout accuracy is better; gains are percentage points relative to AdamW.
 
 | Treatment | Mean holdout accuracy | Gain vs AdamW |
 |---|---:|---:|
