@@ -1,85 +1,144 @@
 # Weight-MF
+
 ## Generative optimization through cross-task weight transfer
 
-Weight-MF studies a generative optimizer that transfers learned weight updates across tasks. A one-shot generator trained with Improved MeanFlow on modular-addition checkpoint pairs proposes compatible transformer-block weights for new tasks. These proposals augment ordinary AdamW optimization through single or repeated block-level interventions. We evaluate cross-task transfer, compositional arithmetic, source-data budgets and causal controls.
+**Can a model trained on one task's optimization trajectories help another task learn faster?** Weight-MF studies this question with a frozen, one-shot generator of transformer-block weights. Trained with Improved MeanFlow (iMF) on modular-addition checkpoints, the generator proposes weights for new tasks and augments ordinary AdamW training through single or repeated interventions.
+
+The strongest results show transfer across operations and into compositional arithmetic. On modular multiplication, a single addition-trained intervention reduces mean steps to the generalization threshold from **6,740 to 2,020** across 20 paired seeds, approximately **70% fewer optimizer steps**. On a five-block arithmetic curriculum, repeated interventions improve mean final holdout accuracy from **57.18% to 75.17%** across five paired seeds. These measure target-training improvements; overall compute savings require accounting for source collection, generator training and inference.
+
+[Method](#method) · [Cross-task results](#cross-task-modular-transfer) · [Compositional arithmetic](#compositional-arithmetic) · [Controls](#what-explains-the-improvement) · [Source data](#source-coverage-and-inference-horizon) · [Limitations](#limitations-and-next-steps) · [Reproduction](#reproduction)
+
+## Research question and contribution
+
+The research question is whether useful weight proposals transfer beyond the task that produced the training checkpoints. A generator can fit source trajectories without producing useful weights for a different objective. Weight-MF therefore evaluates proposals through downstream training behavior: time to a sustained validation threshold, success within a fixed budget, and held-out exact-answer accuracy.
+
+The contribution is a structured checkpoint-learning and cross-task evaluation pipeline built on an existing iMF objective. It combines a transformer-block representation, a frozen conditional endpoint generator, and interventions whose strength, timing and optimizer-state handling can be controlled independently. Paired target seeds and matched perturbation controls test whether the learned proposals offer benefits beyond ordinary optimization, state resets and random displacements.
 
 ## Method
 
-The generative optimizer learns from source-task training trajectories and remains frozen during target-task training. Each generator call predicts an endpoint in one network evaluation. It can be used once or applied periodically during optimizer training. For a selected block W, the frozen generator predicts endpoint P from its weights, source-step prompts, training-subset loss and seeded noise. The intervention is W_new = W + alpha(P - W), followed by ordinary AdamW training. Embeddings learn through the target optimizer. Compatible matrix shapes permit transfer between blocks whose activation, normalization and residual computation differ.
+**Learn from within-run checkpoint pairs.** The main block generator uses 500 modular-addition training trajectories, retaining ten early–late pairs per trajectory. Another 51 trajectories are reserved for validation and 51 for testing. Splits are made by complete source run, and normalization statistics use only the training runs. The initial source corpus favors checkpoints near the sustained generalization threshold; a later experiment varies this sampling strategy.
 
-```mermaid
-flowchart LR
-A[Addition checkpoint pairs] --> B[Conditional iMF training]
-B --> C[Frozen endpoint predictor]
-D[Target block and progress] --> C
-C --> E[Interpolate six matrices]
-E --> F[Continue AdamW]
-F --> D
+**Represent the block's attention and MLP structure.** The source transformer has one block, hidden width 128, four attention heads and MLP width 512. The generator models six matrices: query, key, value, attention output, and the two MLP projections. Its tokens couple the corresponding components of each attention head and the input/output components of each MLP neuron. A latent-attention network processes these tokens without learned head or neuron positions. This representation retains structural relationships while allowing compatible blocks to share the generator.
+
+**Generate a proposed endpoint in one evaluation.** The approximately 15.34-million-parameter iMF model conditions on the current block, start/end step prompts and loss prompts. Training learns to generate later checkpoints from noise using the iMF average-velocity and instantaneous-velocity objective. At inference, seeded Gaussian noise and the checkpoint conditions produce a proposed block in a single network evaluation. The generator remains frozen during target training; no target-task checkpoint trajectories are used to retrain it.
+
+**Use the proposal as a block-level optimization intervention.** For current block weights `W`, generated weights `P`, and strength `alpha`, apply:
+
+```text
+W_new = W + alpha * (P - W)
 ```
 
+AdamW then continues training. Full replacement uses `alpha = 1`; smaller strengths move partway toward the generated endpoint. Embeddings, output weights and all untargeted parameters continue through ordinary optimization. The modular-transfer experiment replaces the single block once, while the compositional experiment repeatedly updates the first block of a five-block target.
 
-## Cross-operation modular generalization
-An addition-mod-113-trained generator replaces six target attention/MLP matrices once at step 500, prompting endpoint 9000, and resets their optimizer states. Embeddings continue to learn normally. Each task uses 20 paired seeds.
+The generator predicts an endpoint conditioned on nominal training progress. Its step prompt is not a guarantee that the proposal equals a target-task checkpoint at that step. The current method is a one-shot weight generator used for generative optimization; consistency as a flow map remains a future research question.
 
-| Task | Modulus | Optimizer threshold steps | iMF threshold steps | Successes optimizer / iMF |
+[Generator implementation](src/weightmf/transformer_weight_meanflow.py) · [iMF objective and sampler](src/weightmf/meanflow_objective.py) · [Training and source split](src/weightmf/transformer_weight_meanflow_training.py)
+
+## Cross-task modular transfer
+
+**An addition-trained generator accelerates several new operations without further source pretraining.** The source task is addition modulo 113. Each target uses 20 paired seeds; the treatment replaces the six attention/MLP matrices after optimizer step 500 with a generated endpoint prompted at step 9,000, clears their AdamW states, and resumes training. Target inputs are three categorical tokens representing whole integers and the answer position.
+
+**Table 1. Cross-task generalization.** Lower threshold-step means are better. Successes count runs reaching the criterion within 20,000 updates; each arm has 20 runs.
+
+| Target task | Modulus | AdamW mean steps | Weight-MF mean steps | Successes: AdamW / Weight-MF |
 |---|---:|---:|---:|---:|
 | Addition | 97 | 7,045 | 2,415 | 20 / 20 |
 | Subtraction | 113 | 16,415 | 7,220 | 10 / 18 |
 | Subtraction | 97 | 16,335 | 7,795 | 10 / 18 |
-| Multiplication | 113 | 6,740 | 2,020 | 20 / 20 |
+| Multiplication | 113 | 6,740 | **2,020** | 20 / 20 |
 | Multiplication | 97 | 8,035 | 2,590 | 19 / 20 |
 | Division | 97 | 17,720 | 8,770 | 10 / 18 |
 | Bitwise XOR | 97 | 6,385 | 2,850 | 20 / 20 |
-| Symmetric quadratic | 97 | Not reached | Not reached | 0 of 20 for each |
+| Symmetric quadratic | 97 | Not reached | Not reached | **0 of 20 / 0 of 20** |
 
-Neither the original optimizer-only models nor the generator-assisted models solve the symmetric-quadratic task to the generalization criterion within the 20,000-step budget. Their final accuracies can improve without reaching that criterion.
+The generalization threshold requires at least 99% training accuracy and 95% validation accuracy for three consecutive evaluations, logged every 100 updates after the initial evaluation. Means replace failures with the 20,000-step censoring limit, combining learning speed and success probability. They are not means conditional on successful convergence.
 
-The generalization threshold requires at least 99% training accuracy and 95% validation accuracy for three consecutive evaluations, logged every 100 updates after the initial evaluation. Threshold means replace failures with the 20,000-step censoring limit; they combine learning speed and success probability. They are not means conditional on successful convergence.
+Neither the original optimizer-only models nor the generator-assisted models learn the symmetric-quadratic task to this criterion: both have zero successful runs out of 20. Higher final accuracy in that treatment does not establish a solved task.
 
-![Cross-task transfer](figures/modular_transfer/cross_task_time_to_threshold.png)
+![Mean threshold steps across target operations](figures/modular_transfer/cross_task_time_to_threshold.png)
 
-### Individual operation learning curves
+*Figure 1. Addition-trained block generation reduces threshold steps across several operations. The symmetric-quadratic bars indicate the censoring limit for unsuccessful runs.*
+
+[Aggregate measurements](results/modular_transfer/aggregate_summary.csv) · [Individual trials](results/modular_transfer/trial_summary.csv) · [Transfer implementation](src/weightmf/transformer_weight_downstream.py)
+
+<details>
+<summary>Individual operation learning curves</summary>
+
 ![Multiplication mod 113](figures/modular_transfer/p113_multiplication_accuracy.png)
 ![Subtraction mod 113](figures/modular_transfer/p113_subtraction_accuracy.png)
 ![Division mod 97](figures/modular_transfer/p97_division_accuracy.png)
 ![Bitwise XOR mod 97](figures/modular_transfer/p97_bitwise_xor_accuracy.png)
 
-## Compositional arithmetic and attribution
-The target is a five-block transformer learning elementary operations followed by bounded expressions with precedence. With 0.1-strength interventions every 500 steps in both stages, final mean holdout exact-answer accuracy improves from 57.18% to 75.17% over five paired seeds on one dataset. Four seeds improve and one declines.
+*Each curve averages validation accuracy over 20 target seeds. The last observation is carried forward after a run stops; those plateaus do not represent additional optimizer updates.*
 
-| Treatment | Mean gain vs optimizer |
-|---|---:|
-| Reset only | +2.00 points |
-| iMF with reset | +17.99 points |
-| iMF preserving state | +18.59 points |
-| Per-matrix update-norm-matched random directions | −7.21 points |
+</details>
 
-![Five paired seeds](figures/curriculum/paired_accuracy_linear.png)
+## Compositional arithmetic
 
-![Causal controls](figures/source_sampling/causal_controls_accuracy.png)
+**Repeated addition-trained proposals also improve fixed-budget learning on a different arithmetic representation.** The target is a five-block transformer that first learns elementary operations, then learns bounded expressions with three to six operands and operator precedence. Inputs use whole-number and operation tokens; divisions are exact and exclude zero divisors. Both curriculum stages run for 20,000 AdamW updates and supervise the answer token.
 
-The norm-matched control is included even though it performs poorly: its mean holdout accuracy is **49.97%**, compared with **57.18%** for the optimizer and **75.17%** for the generator with reset. At every intervention, the control computes the generator proposal on its own current checkpoint, then replaces its direction with Gaussian noise scaled separately for each matrix to match the applied 0.1-strength displacement. It uses the same intervention schedule and optimizer-state reset. This matches the **update norm**, not the norm of the resulting weight matrix. The control therefore tests direction at matched displacement magnitude; it still incurs generator inference cost.
+The treatment applies a 0.1-strength proposal to the first block at local steps 0, 500, 1,000, and so on in both stages. Stage 2 starts from the minimum-validation-loss Stage 1 checkpoint with a fresh optimizer. At the final Stage 2 endpoint, mean holdout exact-answer accuracy rises from **57.18% to 75.17%**, a **17.99-percentage-point** paired improvement. Four of five seeds improve; one declines. The sample standard deviation of the paired improvement is 15.14 points. These are five training seeds on one fixed dataset, with schedules selected through exploratory experiments.
 
-[Individual control results](results/controls/) include all five paired seeds, and the [implementation](experiments/curriculum/controls.py) specifies the matching and reset behavior.
+![Compositional arithmetic validation accuracy over training](figures/curriculum/paired_accuracy_linear.png)
 
+*Figure 2. Validation accuracy during Stage 2, with mean and one sample standard deviation across five paired seeds. The headline numbers are final holdout accuracies, a separate measurement from the validation curves.*
 
-## Source coverage, budget and inference horizon
-A separate 602-run source recollection matched all 755 overlapping checkpoints exactly. The stratified-source generator reached 71.74% under the original prompt rule, versus 76.90% with a 100-step-ahead prompt. The transition-source reference reached 75.17%. This is an exploratory source/horizon interaction.
+The transfer crosses a computational difference despite compatible matrix shapes. The source uses a single block with ReLU, sequential residual updates and no LayerNorm; the target uses five blocks with GELU, pre-LayerNorm, parallel residual updates and partial rotary positions. The experiment demonstrates transfer between these compatible weight layouts, without establishing arbitrary-architecture transfer.
 
-![Horizon](figures/horizons/validation_linear.png)
+[Per-seed curriculum results](results/curriculum/) · [Target architecture](experiments/curriculum/modeling.py) · [Paired training protocol](experiments/curriculum/paired.py)
 
-An earlier embedding-only source-count study compared 50/150/500 runs. The 500-source 10/90 treatment reached the recorded threshold in 3,690 mean steps versus 7,255 for optimizer. The baseline includes one run censored at 20,000 steps. This study uses a different representation and intervention protocol from the later block-generator experiments.
+## What explains the improvement?
 
-![Source-count study](figures/source_scaling/checkpoint_data_scaling_censor_aware.png)
+**The available controls support a role for the learned weight direction beyond optimizer-state resets.** All treatments below use the same five paired target seeds and final holdout metric. Proposal interventions use strength 0.1 every 500 updates in both stages.
 
-## Scope and next steps
+**Table 2. Optimizer-state and displacement controls.** Higher final holdout accuracy is better; gains are percentage points relative to AdamW.
 
-The results support reusable block-weight interventions in controlled arithmetic. Fixed-data seed replication, causal controls and exact trajectory replay strengthen this finding. Source and target computations differ despite shared matrix dimensions; the compositional results measure fixed-budget accuracy, while the modular experiments measure time to a sustained generalization threshold. The generator augments AdamW; a standalone general-purpose optimizer has not been established. Some tasks, seeds and settings decline.
+| Treatment | Mean holdout accuracy | Gain vs AdamW |
+|---|---:|---:|
+| AdamW | 57.18% | — |
+| Reset targeted optimizer state only | 59.18% | +2.00 |
+| Weight-MF with state reset | **75.17%** | **+17.99** |
+| Weight-MF preserving state | 75.77% | +18.59 |
+| Per-matrix displacement-norm-matched random directions | 49.97% | -7.21 |
 
-1. **Investigate norm-matched controls first.** Explain the deterioration under matched random directions and evaluate stable update-norm-matched, weight-norm-preserving and direct-donor controls. This is necessary to distinguish useful predicted directions from the effects of perturbation, shrinkage and reset.
-2. **Develop and test a flow-map formulation.** Treat consistent mappings between checkpoints and compositions of shorter mappings as a future research direction. The current evidence concerns a one-shot endpoint generator; it does not establish a trajectory-consistent flow map.
-3. **Confirm transfer on independent datasets.** Lock the treatment, tune ordinary optimizer baselines on development data, and evaluate paired seeds on untouched target draws.
-4. **Measure total optimization cost.** Compare sustained validation-threshold crossing and wall time, including source collection, generator training and inference.
+The random control matches the magnitude of the proposed update separately for each matrix. At each intervention it computes the generator proposal on its own current checkpoint, replaces its direction with Gaussian noise scaled to the same applied displacement norm, and clears the same optimizer states. It matches update norms rather than resulting weight norms and retains the cost of generator inference.
+
+The random control performs worse than AdamW, while preserving optimizer state retains the learned-proposal gain. These observations distinguish the learned proposals from the tested resets and random perturbations. They do not establish superiority to every perturbation control, direct donor checkpoint or tuned optimizer baseline.
+
+![Optimizer-state and random-displacement controls](figures/source_sampling/causal_controls_accuracy.png)
+
+*Figure 3. Stage 2 validation curves for the control treatments; bands show one sample standard deviation across five paired seeds.*
+
+[Individual control results](results/controls/) · [Control implementation](experiments/curriculum/controls.py)
+
+## Source coverage and inference horizon
+
+**Checkpoint sampling and endpoint prompting interact.** A separate 602-run recollection uses the same 500/51/51 source-run split and matches all 755 overlapping checkpoints exactly. With stratified checkpoint sampling, mean final holdout accuracy is 71.74% under the original endpoint-prompt rule and 76.90% under a 100-step-ahead prompt; the transition-focused reference reaches 75.17%. These exploratory comparisons use the same target dataset and do not establish a reliable advantage for one sampling strategy.
+
+![Checkpoint source and endpoint-horizon comparison](figures/horizons/validation_linear.png)
+
+*Figure 4. Stage 2 validation curves for source-sampling and endpoint-horizon choices, averaged over five paired seeds. Final holdout measurements are reported in the text.*
+
+[Source replay audit](results/source_sampling/trajectory_audit.json) · [Transition generator configuration](configs/transition/summary.json) · [Stratified generator configuration](configs/stratified/summary.json) · [Horizon results](results/horizons/)
+
+### Earlier embedding-only source-budget study
+
+A separate experiment compares predictors trained on 50, 150 and 500 source runs. The 500-source treatment, mixing 10% optimizer update and 90% predicted update, reaches the recorded threshold in 3,690 mean steps versus 7,255 for AdamW. The baseline includes one run censored at 20,000 steps. This study uses direct embedding-velocity regression, a different representation and intervention protocol from the later transformer-block iMF generator; it should not be read as a block-generator scaling law.
+
+![Embedding-only source-budget comparison](figures/source_scaling/checkpoint_data_scaling_censor_aware.png)
+
+*Figure 5. Censor-aware threshold means for the earlier embedding-only study. The retained source budgets are evaluated with fixed source validation/test membership and paired downstream seeds.*
+
+[Censor-aware source-budget results](results/source_scaling/censor_aware_summary.csv)
+
+## Limitations and next steps
+
+The evidence supports reusable block-weight interventions in controlled arithmetic. Performance varies by task, seed and intervention setting. The modular experiments measure time to a sustained generalization threshold; the compositional experiments measure fixed-budget accuracy. Neither establishes a standalone general-purpose optimizer, large-language-model acceleration or net compute savings.
+
+1. **Investigate norm-matched controls first.** Explain the deterioration under the matched random control and test stable update-norm-matched, weight-norm-preserving and direct-donor alternatives. Separate learned direction from shrinkage, perturbation and reset effects.
+2. **Test locked protocols on independent datasets.** Fix schedules and strengths before evaluation, tune ordinary optimizer baselines on development data, and compare paired target seeds on untouched dataset draws. Five seeds on one compositional dataset leave substantial uncertainty.
+3. **Develop and evaluate a flow-map formulation.** Test whether mappings between checkpoints compose consistently across shorter horizons. The present one-shot generator does not establish this property.
+4. **Measure complete optimization cost and broader transfer.** Include source collection, generator training and inference in wall-time and compute comparisons, and evaluate additional model widths and target representations.
 
 ## Reproduction
 
@@ -182,4 +241,4 @@ The current files and published branch history passed Gitleaks and a separate me
 
 ## References
 
-The generator builds on [Mean Flows](https://arxiv.org/abs/2505.13447) and [Improved Mean Flows](https://arxiv.org/abs/2512.02012). The deeper target architecture draws from [Self-Verifying Reflection](https://arxiv.org/abs/2510.12157), with a different answer-only protocol. This project studies transfer of learned weight interventions and its empirical behavior.
+The generator uses [Mean Flows](https://arxiv.org/abs/2505.13447) and [Improved Mean Flows](https://arxiv.org/abs/2512.02012). The deeper target architecture draws from [Self-Verifying Reflection](https://arxiv.org/abs/2510.12157), with a different answer-only training protocol. Weight-MF's contribution is the structured checkpoint-learning, block intervention and cross-task evaluation pipeline; it does not introduce the underlying MeanFlow objective.
